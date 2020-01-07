@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MainApplication</string>
+    <string name="Kanji_image_discription">Drawable object to show Kanji image.</string>
+    <string name="kanji_left">一</string>
+    <string name="kanji_middle">二</string>
+    <string name="kanji_right">三</string>
+    <string name="kanji_example">例文：太陽が昇る/Die Sonne geht auf/The sun rises</string>
+</resources>

@@ -1,0 +1,2 @@
+include ':app', ':mainapplication'
+rootProject.name='LearnJapaneseByPicture'

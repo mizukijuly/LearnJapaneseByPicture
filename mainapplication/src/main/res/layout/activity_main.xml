@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/kanjiWindow"
+        android:layout_width="420dp"
+        android:layout_height="400dp"
+        android:layout_marginBottom="250dp"
+        android:contentDescription="@string/app_name"
+        android:scaleType="fitXY"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.36"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/start" />
+
+    <ImageView
+        android:id="@+id/LeftKanjiBack"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/app_name"
+        android:scaleType="fitXY"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/MiddleKanjiBack"
+        app:layout_constraintEnd_toStartOf="@+id/MiddleKanjiBack"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/MiddleKanjiBack"
+        app:srcCompat="@drawable/kanjiback" />
+
+    <ImageView
+        android:id="@+id/MiddleKanjiBack"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginBottom="140dp"
+        android:contentDescription="@string/app_name"
+        android:scaleType="fitXY"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/RightKanjiBack"
+        app:layout_constraintStart_toEndOf="@+id/LeftKanjiBack"
+        app:layout_constraintTop_toBottomOf="@id/kanjiWindow"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/kanjiback" />
+
+    <ImageView
+        android:id="@+id/RightKanjiBack"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/app_name"
+        android:scaleType="fitXY"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/MiddleKanjiBack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/MiddleKanjiBack"
+        app:layout_constraintTop_toTopOf="@+id/MiddleKanjiBack"
+        app:layout_constraintVertical_bias="0.782"
+        app:srcCompat="@drawable/kanjiback" />
+
+    <ImageView
+        android:id="@+id/NextButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:clickable="true"
+        android:contentDescription="@string/app_name"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:scaleType="fitXY"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/MiddleKanjiBack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/kanjiWindow"
+        app:srcCompat="@drawable/next" />
+
+    <TextView
+        android:id="@+id/Answer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#2196F3"
+        android:inputType="none"
+        android:text="@string/kanji_example"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/MiddleKanjiBack" />
+
+    <TextView
+        android:id="@+id/LeftKanjiText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:focusable="true"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="72sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/LeftKanjiBack"
+        app:layout_constraintEnd_toEndOf="@+id/LeftKanjiBack"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/LeftKanjiBack" />
+
+    <TextView
+        android:id="@+id/MiddleKanjiText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="72sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/LeftKanjiBack"
+        app:layout_constraintEnd_toEndOf="@+id/MiddleKanjiBack"
+        app:layout_constraintStart_toStartOf="@+id/MiddleKanjiBack"
+        app:layout_constraintTop_toTopOf="@+id/LeftKanjiBack" />
+
+    <TextView
+        android:id="@+id/RightKanjiText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="72sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/LeftKanjiBack"
+        app:layout_constraintEnd_toEndOf="@+id/RightKanjiBack"
+        app:layout_constraintStart_toEndOf="@+id/MiddleKanjiBack"
+        app:layout_constraintTop_toTopOf="@+id/LeftKanjiBack" />
+
+    <ImageView
+        android:id="@+id/KanjiAnswerButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clickable="true"
+        android:contentDescription="@string/app_name"
+        android:focusable="auto"
+        android:focusableInTouchMode="true"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/MiddleKanjiBack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/LeftKanjiBack"
+        app:layout_constraintTop_toTopOf="@+id/MiddleKanjiBack" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
