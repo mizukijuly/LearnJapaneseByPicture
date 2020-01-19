@@ -10,9 +10,6 @@ import kotlinx.android.synthetic.main.activity_fullscreen.*
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-/**
- * TODO: I need to find out how can I build my first project.
- */
 
 class FullscreenActivity : AppCompatActivity() {
     private val mHideHandler = Handler()
