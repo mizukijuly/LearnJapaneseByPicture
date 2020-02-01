@@ -31,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
     // Multi dimensional array
     // G1 = FirstGrade
-    String[][] KanjisG2 = {
+    // TODO: Add German/English word from G2
+    String[][] KanjisG1_2 = {
             {
                 "person",
                 "人", "日", "一",
@@ -65,12 +66,212 @@ public class MainActivity extends AppCompatActivity {
                     "das Leben", "die Eroberung", "die Gerechtigkeit"
             },
             {
+                    "six",
+                    "六", "七", "五",
+                    "Right", "Wrong", "Wrong",
+                    "さいころの六/Sechsseitigen Würfeln möglich/Six of dice",
+                    "Six", "Seven", "Five",
+                    "sechs", "Sieben", "fünf"
+            },
+            {
+                    "grove",
+                    "本", "休", "林",
+                    "Wrong", "Wrong", "Right",
+                    "木々が群生して林になる/Bäume wachsen zu Handschuhen/Trees grow into grove",
+                    "Book", "Rest", "Grove",
+                    "das Buch", "der Rest", "der Hain"
+            },
+            {
+                    "power",
+                    "仂", "力", "刀",
+                    "Wrong", "Right", "Wrong",
+                    "供給電力/Mit Strom versorgen/Supply power",
+                    "Act", "Power", "Blade",
+                    "die Handlung", "die Klinge"
+            },
+            {
+                    "stand",
+                    "立", "経", "絶",
+                    "Right", "Wrong", "Wrong",
+                    "ヨガのポーズで立つ/Stehen Sie in Yoga-Pose/Stand in yoga pose",
+                    "Standing", "Passing", "Absolute",
+                    "das Stehen", "das Bestehen", "das Absolute"
+            },
+            {
+                    "eye",
+                    "日", "貝", "目",
+                    "Wrong", "Wrong", "Right",
+                    "青い目/Blaue Augen/Blue eyes",
+                    "Sun", "Shellfish", "Eye",
+                    "die Sonne", "das Schaltier", "das Auge"
+            },
+            {
+                    "name",
+                    "代", "名", "前",
+                    "Wrong", "Right", "Wrong",
+                    "名義が書かれたカード/Karte mit Namen/Card with name",
+                    "Generation", "Name", "Previous",
+                    "die Generation", "der Name", "vorig"
+            },
+            {
+                    "book",
+                    "本", "木", "林",
+                    "Right", "Wrong", "Wrong",
+                    "本を散らかす/Bücher streuen/Scatter books",
+                    "Book", "Tree", "Woods",
+                    "das Buch", "der Baum", "der Wald"
+            },
+            {
+                    "sentence",
+                    "門", "竹", "文",
+                    "Wrong", "Wrong", "Right",
+                    "啓発文の書かれたコップ/Tasse mit Aufklärungssatz/Cup with enlightenment sentence",
+                    "Gate", "Bamboo", "Sentence",
+                    "das Tor", "der Bambus", "der Satz"
+            },
+            {
+                    "hundred",
+                    "千", "百", "万",
+                    "Wrong", "Right", "Wrong",
+                    "百パーセント保証/Hudred Prozent Garantie/Hudred percent guarantee",
+                    "Thousand", "Hundred", "Ten thousand",
+                    "Tausend", "Hundert", "Zehntausend"
+            },
+            {
+                    "eight",
+                    "八", "九", "七",
+                    "Right", "Wrong", "Wrong",
+                    "八番球/Acht Ball/Eighth ball",
+                    "Eight", "Nine", "Seven",
+                    "Acht", "Neun", "Sieben"
+            },
+            {
+                    "white",
+                    "赤", "黄", "白",
+                    "Wrong", "Wrong", "Right",
+                    "白鳥が泳ぐ/Schwäne schwimmen/Swans swim",
+                    "Red", "Yellow", "White",
+                    "rot", "Gelb", "das Weiß"
+            },
+            {
+                    "year",
+                    "齢", "年", "歳",
+                    "Wrong", "Right", "Wrong",
+                    "今年は東京オリンピック/Dieses Jahr sind die Olympischen Spiele in Tokio/This year is the Tokyo Olympics",
+                    "Age", "Year", "Age",
+                    "das Alter", "das Jahr", "das Alter"
+            },
+            {
+                    "enter",
+                    "入", "出", "居",
+                    "Right", "Wrong", "Wrong",
+                    "入口/der Eingang/Entrance",
+                    "Entering", "Out", "Residence",
+                    "eintreten", "aus", "die Residenz"
+            },
+            {
+                    "enter",
+                    "入", "出", "居",
+                    "Right", "Wrong", "Wrong",
+                    "入口/der Eingang/Entrance",
+                    "Entering", "Out", "Residence",
+                    "eintreten", "aus", "die Residenz"
+            },
+            {
+                    "two",
+                    "一", "三", "二",
+                    "Wrong", "Wrong", "Right",
+                    "二人の女性/Zwei Frauen/Two women",
+                    "One", "Three", "Two",
+                    "eine", "drei", "zwei"
+            },
+            {
+                    "earth",
+                    "知", "地", "血",
+                    "Wrong", "Right", "Wrong",
+                    "干ばつした地面/Dürre Boden/Drought ground",
+                    "Knowledge", "Earth", "Blood",
+                    "das Wissen", "die Erde", "das Blut"
+            },
+            {
+                    "ricefield",
+                    "田", "多", "十",
+                    "Right", "Wrong", "Wrong",
+                    "一面に広がる田畑/Felder breiteten sich aus/Fields spread all over",
+                    "Rice field", "Many", "Ten",
+                    "das Reisfeld", "Viele", "Zehn"
+            },
+            {
+                    "heavens",
+                    "地", "夫", "天",
+                    "Wrong", "Wrong", "Right",
+                    "天より遣われし犬天使/Hundeengel vom Himmel geschickt/Dog angel sent from heaven",
+                    "Earth", "husband", "Heaven",
+                    "die Erde", "der Ehemann", "der Himmel"
+            },
+            {
+                    "town",
+                    "坊", "町", "田",
+                    "Wrong", "Right", "Wrong",
+                    "町に夜が訪れる/Die Nacht kommt in die Stadt/Night comes to town",
+                    "Boy", "Town", "Rice field",
+                    "der Junge", "die Stadt", "das Reisfeld"
+            },
+            {
+                    "insect",
+                    "虫", "無", "蒸",
+                    "Right", "Wrong", "Wrong",
+                    "テントウムシ/Die Marienkäfer/Ladybird",
+                    "Insect", "Naught", "Steaming",
+                    "das Insekt", "das Nichts", "dampfen"
+            },
+            {
+                    "middle",
+                    "外", "大", "中",
+                    "Wrong", "Wrong", "Right",
+                    "ハートの真ん中/Mitten im Herzen/Middle of heart",
+                    "Out", "Large", "Middle",
+                    "aus", "groß", "die Mitte"
+            },
+            {
+                    "bamboo",
+                    "武", "竹", "丈",
+                    "Wrong", "Right", "Wrong",
+                    "聳え立つ竹/Hoch aufragender Bambus/Towering bamboo",
+                    "Martial", "Bamboo", "length",
+                    "kriegerisch", "der Bambus", "die Länge"
+            },
+            {
+                    "man",
+                    "男", "女", "両",
+                    "Right", "Wrong", "Wrong",
+                    "暗闇に佇む男/Mann steht in der Dunkelheit/Man standing in the dark",
+                    "Man", "Woman", "Both",
+                    "der Mann", "die Frau", "beide"
+            },
+            {
+                    "large",
+                    "中", "小", "大",
+                    "Wrong", "Wrong", "Right",
+                    "巨大クラゲ/die Riesenquallen/Giant jellyfish",
+                    "Middle", "Small", "Large",
+                    "die Mitte", "klein", "groß"
+            },
+            {
+                    "village",
+                    "街", "村", "町",
+                    "Wrong", "Right", "Wrong",
+                    "村に夕日が落ちる/Sonnenuntergang fällt in das Dorf/Sunset falls in the village",
+                    "City", "Village", "Town",
+                    "die Großstadt", "das Dorf", "die Stadt"
+            },
+            {
                     "leg",
                     "足", "芦", "是",
                     "Right", "Wrong", "Wrong",
-                    "",
-                    "Early", "Ten", "Grass",
-                    "früh", "zehn", "das Gras"
+                    "車から足だけ出す/Steig aus dem Auto/Get your feet out of the car",
+                    "Foot", "Reed", "By all means",
+                    "der Fuß", "das Schilf", "Auf jeden Fall"
             },
             {
                     "grass",
@@ -146,7 +347,7 @@ public class MainActivity extends AppCompatActivity {
             }
     };
 
-    String[][] KanjisG1 = {
+    String[][] KanjisG1_1 = {
             {
                     "sun",
                     "目", "日", "楊",
@@ -506,7 +707,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
     // Initial setting
-    String[][] Kanjis = KanjisG1;
+    String[][] Kanjis = KanjisG1_1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
