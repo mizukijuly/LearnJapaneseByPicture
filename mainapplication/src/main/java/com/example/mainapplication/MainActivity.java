@@ -33,14 +33,119 @@ public class MainActivity extends AppCompatActivity {
     // G1 = FirstGrade
     String[][] KanjisG2 = {
             {
-                    "sea",
-                    "海", "梅", "桜",
+                "person",
+                "人", "日", "一",
+                "Right", "Wrong", "Wrong",
+                "人々が団結する/Menschen vereinen sich/People unite",
+                "Person", "Sun", "One",
+                "die Person", "Die Sonne", "eine"
+            },
+            {
+                "water",
+                "火", "水", "氷",
+                "Wrong", "Right", "Wrong",
+                "水滴が波紋を生む/Tröpfchen erzeugen Wellen/Droplets create ripples",
+                "Fire", "Water", "Ice",
+                "das Feuer", "das Wasser", "das Eis"
+            },
+            {
+                "justice",
+                "生", "征", "正",
+                "Wrong", "Wrong", "Right",
+                "正義の名の下に/Im Namen der Gerechtigkeit/In the name of justice",
+                "Life", "Conquest", "Justice",
+                "das Leben", "die Eroberung", "die Gerechtigkeit"
+            },
+            {
+                    "life",
+                    "生", "征", "正",
                     "Right", "Wrong", "Wrong",
-                    "海で泳ぐ/Schwimmen Sie im Meer/Swim in the sea",
-                    "Sea", "Plum", "Cherry Blossoms",
-                    "Meer", "die Pflaume", "Die Kirschblüte",
+                    "子供が生まれる/Ein Kind wird geboren/A child is born",
+                    "Life", "Conquest", "Justice",
+                    "das Leben", "die Eroberung", "die Gerechtigkeit"
+            },
+            {
+                    "leg",
+                    "足", "芦", "是",
+                    "Right", "Wrong", "Wrong",
+                    "",
+                    "Early", "Ten", "Grass",
+                    "früh", "zehn", "das Gras"
+            },
+            {
+                    "grass",
+                    "早", "十", "草",
+                    "Wrong", "Wrong", "Right",
+                    "草原で読書/Lesen auf der Wiese/Reading on the meadow",
+                    "Early", "Ten", "Grass",
+                    "früh", "zehn", "das Gras"
+            },
+            {
+                    "early",
+                    "遅", "早", "速",
+                    "Wrong", "Right", "Wrong",
+                    "早朝/früher Morgen/Early morning",
+                    "Slow", "Early", "Fast",
+                    "langsam", "früh", "schnell"
+            },
+            {
+                    "ahead",
+                    "先", "後", "生",
+                    "Right", "Wrong", "Wrong",
+                    "この先には何が待っているのか/Was wartet noch?/What's waiting ahead",
+                    "Ahead", "Back", "Life",
+                    "voraus", "zurück", "das Leben"
+            },
+            {
+                    "river",
+                    "海", "空", "川",
+                    "Wrong", "Wrong", "Right",
+                    "川で魚を釣る/Fischen Sie im Fluss/Fish in the river",
+                    "Sea", "Sky", "River",
+                    "das Meer", "der Himmel", "der Fluss"
+            },
+            {
+                    "thousand",
+                    "百", "千", "億",
+                    "Wrong", "Right", "Wrong",
+                    "千ルーブル/Tausend Rubel/Thousand rubles",
+                    "Hundred", "Thousand", "Hundred million",
+                    "hundert", "Tausend", "hundert Millionen"
+            },
+            {
+                    "red",
+                    "赤", "青", "黄",
+                    "Right", "Wrong", "Wrong",
+                    "赤い薔薇/rote Rose/Red rose",
+                    "Red", "Blue", "Yellow",
+                    "rot", "Blau", "Gelb"
+            },
+            {
+                    "evening",
+                    "朝", "昼", "夕",
+                    "Wrong", "Wrong", "Right",
+                    "夕日を背に受ける/Der Sonnenuntergang dahinter/The sunset behind",
+                    "Morning", "Afternoon", "Evening",
+                    "Morgen", "Nachmittag", "Abend"
+            },
+            {
+                    "blue",
+                    "黄", "青", "赤",
+                    "Wrong", "Right", "Wrong",
+                    "青い目/Blaue Augen/Blue eyes",
+                    "Yellow", "Blue", "Red",
+                    "Gelb", "Blau", "rot"
+            },
+            {
+                "sea",
+                "海", "梅", "桜",
+                "Right", "Wrong", "Wrong",
+                "海で泳ぐ/Schwimmen Sie im Meer/Swim in the sea",
+                "Sea", "Plum", "Cherry Blossoms",
+                "Meer", "die Pflaume", "Die Kirschblüte",
             }
     };
+
     String[][] KanjisG1 = {
             {
                     "sun",
@@ -292,11 +397,99 @@ public class MainActivity extends AppCompatActivity {
             },
             {
                     "thread",
-                    "五", "六", "四",
+                    "糸", "衣", "絃",
+                    "Right", "Wrong", "Wrong",
+                    "巻かれた糸/Gewickelter Faden/Wound thread",
+                    "Thread", "Clothing", "String",
+                    "das Gewinde", "die Kleidung", "die schnur"
+            },
+            {
+                    "character",
+                    "地", "字", "時",
+                    "Wrong", "Right", "Wrong",
+                    "活字版/der Buchdruck/Letterpress",
+                    "Earth", "Character", "Time",
+                    "die Erde", "der Charakter", "Die Zeit"
+            },
+            {
+                    "ear",
+                    "目", "見", "耳",
                     "Wrong", "Wrong", "Right",
-                    "サイコロの四/Vier von Würfel/Four of dice",
-                    "Five", "Six", "Four",
-                    "fünf", "sechs", "vier"
+                    "耳を検査する/Untersuche das Ohr/Examining the ear",
+                    "Eye", "See", "Ear",
+                    "das Auge", "sehen", "das Ohr"
+            },
+            {
+                    "seven",
+                    "七", "六", "八",
+                    "Right", "Wrong", "Wrong",
+                    "七転び八起き/Nach einem Sturz immer aufstehen/Always rising after a fall",
+                    "Seven", "Six", "Eight",
+                    "sieben", "sechs", "acht"
+            },
+            {
+                    "car",
+                    "来", "車", "田",
+                    "Wrong", "Right", "Wrong",
+                    "車を運転する/ein Auto fahren/Drive a car",
+                    "Coming", "Car", "Rice field",
+                    "das Kommen", "das Auto", "Reisfeld"
+            },
+            {
+                    "hand",
+                    "平", "千", "手",
+                    "Wrong", "Wrong", "Right",
+                    "手をつなぐ/Händchen halten/Hold hands",
+                    "Flat", "Thousand", "Hand",
+                    "Eben", "Tausend",  "die Hand"
+            },
+            {
+                    "ten",
+                    "十", "銃", "九",
+                    "Right", "Wrong", "Wrong",
+                    "十ユーロ札/Zehn Euro/Ten EURO",
+                    "Flat", "Thousand", "Hand",
+                    "Eben", "Tausend",  "die Hand"
+            },
+            {
+                    "exit",
+                    "口", "出", "山",
+                    "Wrong", "Right", "Wrong",
+                    "出口はここです/Ausgang ist hier/Exit is here",
+                    "Mouth", "Out", "Mountain",
+                    "der Mund", "aus",  "der Berg"
+            },
+            {
+                    "woman",
+                    "乙", "男", "女",
+                    "Wrong", "Wrong", "Right",
+                    "スカーフを被った女性/Frau trägt einen Schal/Woman wearing a scarf",
+                    "Witty", "Man", "Woman",
+                    "witzig", "der Mann", "die Frau"
+            },
+            {
+                    "little",
+                    "小", "大", "中",
+                    "Right", "Wrong", "Wrong",
+                    "小鳥/der kleiner Vogel/Little Bird",
+                    "Little", "Big", "Middle",
+                    "klein", "groß", "die Mitte"
+            },
+            {
+                    "above",
+                    "下", "上", "中",
+                    "Wrong", "Right", "Wrong",
+                    "上空に航空機が飛んでいる/Ein Flugzeug fliegt über den Himmel/An airplane is flying over the sky",
+                    "Under", "Above", "Middle",
+                    "unter", "über", "die Mitte"
+            },
+            {
+                    "forest",
+                    "守", "盛", "森",
+                    "Wrong", "Wrong", "Right",
+                    "森の空気を吸う/Atme die Luft des Waldes/Breathe the air of the forest",
+                    "Protect", "Assortment", "Forest",
+                    "Schützen", "das Sortiment", "der Wald"
             }
     };
 
@@ -529,9 +722,73 @@ public class MainActivity extends AppCompatActivity {
                         // code block
                         myImage = ResourcesCompat.getDrawable(res, R.drawable.left, null);
                         break;
+                    case "thread":
+                        // code block
+                        myImage = ResourcesCompat.getDrawable(res, R.drawable.thread, null);
+                        break;
+                    case "four":
+                        // code block
+                        myImage = ResourcesCompat.getDrawable(res, R.drawable.four, null);
+                        break;
+                    case "kid":
+                        // code block
+                        myImage = ResourcesCompat.getDrawable(res, R.drawable.kid, null);
+                        break;
                     case "finish":
                         // code block
                         myImage = ResourcesCompat.getDrawable(res, R.drawable.finish, null);
+                        break;
+                    case "mountain":
+                        // code block
+                        myImage = ResourcesCompat.getDrawable(res, R.drawable.mountain, null);
+                        break;
+                    case "three":
+                        // code block
+                        myImage = ResourcesCompat.getDrawable(res, R.drawable.three, null);
+                        break;
+                    case "character":
+                        // code block
+                        myImage = ResourcesCompat.getDrawable(res, R.drawable.character, null);
+                        break;
+                    case "seven":
+                        // code block
+                        myImage = ResourcesCompat.getDrawable(res, R.drawable.seven, null);
+                        break;
+                    case "car":
+                        // code block
+                        myImage = ResourcesCompat.getDrawable(res, R.drawable.car, null);
+                        break;
+                    case "hand":
+                        // code block
+                        myImage = ResourcesCompat.getDrawable(res, R.drawable.hand, null);
+                        break;
+                    case "ten":
+                        // code block
+                        myImage = ResourcesCompat.getDrawable(res, R.drawable.ten, null);
+                        break;
+                    case "exit":
+                        // code block
+                        myImage = ResourcesCompat.getDrawable(res, R.drawable.exit, null);
+                        break;
+                    case "woman":
+                        // code block
+                        myImage = ResourcesCompat.getDrawable(res, R.drawable.woman, null);
+                        break;
+                    case "little":
+                        // code block
+                        myImage = ResourcesCompat.getDrawable(res, R.drawable.little, null);
+                        break;
+                    case "above":
+                        // code block
+                        myImage = ResourcesCompat.getDrawable(res, R.drawable.above, null);
+                        break;
+                    case "forest":
+                        // code block
+                        myImage = ResourcesCompat.getDrawable(res, R.drawable.forest, null);
+                        break;
+                    case "ear":
+                        // code block
+                        myImage = ResourcesCompat.getDrawable(res, R.drawable.ear, null);
                         break;
                     default:
                         // code block
