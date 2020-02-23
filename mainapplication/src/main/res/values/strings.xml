@@ -5,4 +5,48 @@
     <string name="kanji_middle">二</string>
     <string name="kanji_right">三</string>
     <string name="kanji_example">例文：太陽が昇る/Die Sonne geht auf/The sun rises</string>
+    <string name="level_prompt">LevelG1_1</string>
+    <string name="selectLevel">SelectLevel</string>
+
+    <string-array name="level_arrays">
+        <item>G1_1</item>
+        <item>G1_2</item>
+        <item>G2_1</item>
+        <item>G2_2</item>
+        <item>G2_3</item>
+        <item>G3_1</item>
+        <item>G3_2</item>
+        <item>G3_3</item>
+        <item>G3_4</item>
+        <item>G4_1</item>
+        <item>G4_2</item>
+        <item>G4_3</item>
+        <item>G4_4</item>
+        <item>G4_5</item>
+        <item>G5_1</item>
+        <item>G5_2</item>
+        <item>G5_3</item>
+        <item>G5_4</item>
+        <item>G6_1</item>
+        <item>G6_2</item>
+        <item>G6_3</item>
+        <item>G6_4</item>
+        <item>H1</item>
+        <item>H2</item>
+        <item>H3</item>
+        <item>H4</item>
+        <item>H5</item>
+        <item>H6</item>
+        <item>H7</item>
+        <item>H8</item>
+        <item>H9</item>
+        <item>H10</item>
+        <item>H11</item>
+        <item>H12</item>
+        <item>H13</item>
+        <item>H14</item>
+        <item>H15</item>
+
+
+    </string-array>
 </resources>

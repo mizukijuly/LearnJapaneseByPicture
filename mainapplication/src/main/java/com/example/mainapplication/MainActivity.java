@@ -1,8 +1,6 @@
 package com.example.mainapplication;
-
 import java.util.Random;
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.ObjectUtils;
 
 import android.content.Context;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,15 +10,19 @@ import androidx.core.content.res.ResourcesCompat;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.content.res.Resources;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    //TODO: Difficulty selection
     //TODO: Add pics
     //FUTURE: Show wrong list in the last.
     //FUTURE: Review example sentence. If sentence is related to picture it helps to remember.
@@ -28,68 +30,70 @@ public class MainActivity extends AppCompatActivity {
     //FUTURE: Add German/English word from G2
 
     ConstraintLayout constraintLayout;
-    int        Questions        = 0;
-    int        CorrectAnswers   = 0;
-    int        RandomNumber     = 0;
-    boolean    LockNumberCount  = false;
+    int Questions = 0;
+    int CorrectAnswers = 0;
+    int RandomNumber = 0;
+    boolean LockNumberCount = false;
+    private Spinner spinner1;
+
 
     // Multi dimensional array
     // G1 = FirstGrade
     // Each array contains 40-50 kanjis
     String[][] KanjisH15 = {
             {"worry", "愁", "example"},
-            {"floor", "楼", "example"},
-            {"salary", "薪", "example"},
+            {"tower", "楼", "example"},
+            {"firewood", "薪", "example"},
             {"brown", "褐", "example"},
             {"bestow", "賜", "example"},
-            {"construction and maintenance", "繕", "example"},
-            {"bolt", "栓", "example"},
-            {"concave", "凹", "example"},
+            {"maintenance", "繕", "example"},
+            {"plug", "栓", "example"},
+            {"sunken", "凹", "example"},
             {"refining", "錬", "example"},
-            {"sincerely", "衷", "example"},
-            {"by", "逐", "example"},
-            {"scold", "斥", "example"},
-            {"chao", "詔", "example"},
+            {"eclectic", "衷", "example"},
+            {"gradually", "逐", "example"},
+            {"rejection", "斥", "example"},
+            {"decree", "詔", "example"},
             {"night", "宵", "example"},
-            {"vain", "妄", "example"},
+            {"delusion", "妄", "example"},
             {"discretionary", "酌", "example"},
-            {"confer", "頒", "example"},
+            {"distribution", "頒", "example"},
             {"limb", "肢", "example"},
-            {"copy", "謄", "example"},
+            {"transcript", "謄", "example"},
             {"heir", "嗣", "example"},
-            {"mu", "畝", "example"},
+            {"furrow", "畝", "example"},
             {"copy", "抄", "example"},
             {"lazy", "惰", "example"},
-            {"quite", "蛮", "example"},
+            {"savagery", "蛮", "example"},
             {"one", "壱", "example"},
-            {"hou", "侯", "example"},
+            {"weather", "侯", "example"},
             {"arc", "弧", "example"},
             {"attach", "附", "example"},
             {"but", "但", "example"},
             {"potato", "芋", "example"},
-            {"mother-in-law", "婆", "example"},
+            {"hag", "婆", "example"},
             {"imitation", "倣", "example"},
             {"frugality", "倹", "example"},
             {"cocoon", "繭", "example"},
-            {"ye", "謁", "example"},
-            {"ge", "箇", "example"},
+            {"audience", "謁", "example"},
+            {"section", "箇", "example"},
             {"and", "且", "example"},
-            {"jin", "斤", "example"},
-            {"yu", "虞", "example"},
+            {"loaf", "斤", "example"},
+            {"trapped", "虞", "example"},
             {"cultivate", "墾", "example"},
             {"seal", "璽", "example"},
             {"spoon", "勺", "example"},
-            {"jazz", "爵", "example"},
+            {"lord", "爵", "example"},
             {"follow", "遵", "example"},
-            {"hammer", "錘", "example"},
-            {"milling", "銑", "example"},
+            {"weight", "錘", "example"},
+            {"shiny_metal", "銑", "example"},
             {"mould", "塑", "example"},
             {"swell", "脹", "example"},
             {"i", "朕", "example"},
             {"smallpox", "痘", "example"},
             {"two", "弐", "example"},
             {"endow", "賦", "example"},
-            {"c", "丙", "example"},
+            {"third", "丙", "example"},
             {"consume", "耗", "example"},
             {"momme", "匁", "example"},
             {"excessive", "濫", "example"},
@@ -98,8 +102,8 @@ public class MainActivity extends AppCompatActivity {
     String[][] KanjisH14 = {
             {"lip", "唇", "example"},
             {"quiet", "閑", "example"},
-            {"quiet", "幽", "example"},
-            {"cao", "曹", "example"},
+            {"ghost", "幽", "example"},
+            {"sergeant", "曹", "example"},
             {"chant", "詠", "example"},
             {"humble", "卑", "example"},
             {"insult", "侮", "example"},
@@ -107,11 +111,11 @@ public class MainActivity extends AppCompatActivity {
             {"wipe", "抹", "example"},
             {"captain", "尉", "example"},
             {"scribe", "隷", "example"},
-            {"disaster", "禍", "example"},
-            {"casein", "酪", "example"},
+            {"slavery", "禍", "example"},
+            {"dairy", "酪", "example"},
             {"stem", "茎", "example"},
-            {"handsome", "帥", "example"},
-            {"pass away", "逝", "example"},
+            {"marshal", "帥", "example"},
+            {"pass_away", "逝", "example"},
             {"hide", "匿", "example"},
             {"collar", "襟", "example"},
             {"firefly", "蛍", "example"},
@@ -123,34 +127,34 @@ public class MainActivity extends AppCompatActivity {
             {"squeezing", "搾", "example"},
             {"shore", "畔", "example"},
             {"hole", "孔", "example"},
-            {"copy", "拷", "example"},
-            {"young lady", "嬢", "example"},
+            {"torture", "拷", "example"},
+            {"young_lady", "嬢", "example"},
             {"valley", "渓", "example"},
-            {"weng", "翁", "example"},
+            {"old_man", "翁", "example"},
             {"inexpensive", "廉", "example"},
             {"sincerely", "謹", "example"},
             {"kiln", "窯", "example"},
             {"praise", "褒", "example"},
             {"ugly", "醜", "example"},
-            {"rise", "升", "example"},
+            {"shou", "升", "example"},
             {"martyrdom", "殉", "example"},
             {"bother", "煩", "example"},
             {"impeach", "劾", "example"},
             {"fall", "堕", "example"},
-            {"rent", "租", "example"},
+            {"tax", "租", "example"},
             {"pier", "桟", "example"},
             {"son-in-law", "婿", "example"},
             {"adore", "慕", "example"},
-            {"stop", "罷", "example"},
-            {"correct", "矯", "example"},
+            {"dismissal", "罷", "example"},
+            {"straightening", "矯", "example"},
             {"certain", "某", "example"},
             {"prisoners", "囚", "example"},
             {"secrete", "泌", "example"},
             {"gradually", "漸", "example"},
             {"mosquito", "蚊", "example"},
-            {"hey", "厄", "example"},
+            {"disaster", "厄", "example"},
             {"algae", "藻", "example"},
-            {"first wife", "嫡", "example"},
+            {"legitimacy", "嫡", "example"},
             {"scare", "嚇", "example"},
             {"convex", "凸", "example"},
             {"rhyme", "韻", "example"},
@@ -175,10 +179,10 @@ public class MainActivity extends AppCompatActivity {
             {"play", "戯", "example"},
             {"avoid", "忌", "example"},
             {"turbidity", "濁", "example"},
-            {"run", "奔", "example"},
-            {"bucket", "斗", "example"},
+            {"rush", "奔", "example"},
+            {"ladle", "斗", "example"},
             {"fast", "迅", "example"},
-            {"shaw", "肖", "example"},
+            {"Portrait", "肖", "example"},
             {"bowl", "鉢", "example"},
             {"rotten", "朽", "example"},
             {"shell", "殻", "example"},
@@ -187,49 +191,49 @@ public class MainActivity extends AppCompatActivity {
             {"matchmaker", "媒", "example"},
             {"chicken", "鶏", "example"},
             {"zen", "禅", "example"},
-            {"order", "嘱", "example"},
+            {"entrust", "嘱", "example"},
             {"torso", "胴", "example"},
-            {"it", "迭", "example"},
+            {"send", "迭", "example"},
             {"insertion", "挿", "example"},
             {"accompany", "陪", "example"},
             {"dissect", "剖", "example"},
-            {"spectrum", "譜", "example"},
-            {"long", "悠", "example"},
-            {"shu", "淑", "example"},
+            {"genealogy", "譜", "example"},
+            {"leisurely", "悠", "example"},
+            {"virtue", "淑", "example"},
             {"sail", "帆", "example"},
             {"dawn", "暁", "example"},
-            {"jay", "傑", "example"},
+            {"master", "傑", "example"},
             {"guy", "奴", "example"},
             {"tablets", "錠", "example"},
-            {"move", "遷", "example"},
+            {"transition", "遷", "example"},
             {"clumsy", "拙", "example"},
-            {"waiter", "侍", "example"},
+            {"warrior", "侍", "example"},
             {"pass", "峠", "example"},
-            {"tuk", "篤", "example"},
+            {"serious", "篤", "example"},
             {"thirst", "渇", "example"},
             {"uncle", "叔", "example"},
             {"female", "雌", "example"},
             {"worthy", "堪", "example"},
-            {"recount", "叙", "example"},
+            {"order", "叙", "example"},
             {"vinegar", "酢", "example"},
             {"moan", "吟", "example"},
-            {"lodgement", "逓", "example"},
+            {"gradually", "逓", "example"},
             {"very", "甚", "example"},
             {"worship", "崇", "example"},
-            {"paint", "漆", "example"},
+            {"lacquer", "漆", "example"},
             {"cape", "岬", "example"},
             {"habit", "癖", "example"},
             {"enjoy", "愉", "example"},
             {"reef", "礁", "example"},
-            {"tuen", "屯", "example"},
+            {"cantonment", "屯", "example"},
             {"marriage", "姻", "example"},
-            {"intend", "擬", "example"},
+            {"fake", "擬", "example"},
             {"fence", "塀", "example"}
     };
 
     String[][] KanjisH12 = {
             {"blind", "盲", "example"},
-            {"smart", "粋", "example"},
+            {"chic", "粋", "example"},
             {"disgrace", "辱", "example"},
             {"jurisdiction", "轄", "example"},
             {"ape", "猿", "example"},
@@ -237,12 +241,12 @@ public class MainActivity extends AppCompatActivity {
             {"smother", "窒", "example"},
             {"cooking", "炊", "example"},
             {"flood", "洪", "example"},
-            {"setting", "摂", "example"},
-            {"full", "飽", "example"},
+            {"intake", "摂", "example"},
+            {"bored", "飽", "example"},
             {"redundant", "冗", "example"},
             {"peach", "桃", "example"},
             {"hunting", "狩", "example"},
-            {"zhu", "朱", "example"},
+            {"red", "朱", "example"},
             {"eddy", "渦", "example"},
             {"gentry", "紳", "example"},
             {"pivot", "枢", "example"},
@@ -256,14 +260,14 @@ public class MainActivity extends AppCompatActivity {
             {"currency", "幣", "example"},
             {"membrane", "膜", "example"},
             {"fan", "扇", "example"},
-            {"groove", "槽", "example"},
+            {"tank", "槽", "example"},
             {"kind", "慈", "example"},
             {"cut", "伐", "example"},
-            {"stain", "漬", "example"},
-            {"correct", "糾", "example"},
+            {"clean", "漬", "example"},
+            {"inquire", "糾", "example"},
             {"grave", "墳", "example"},
-            {"ping", "坪", "example"},
-            {"navy blue", "紺", "example"},
+            {"tsubo", "坪", "example"},
+            {"navy_blue", "紺", "example"},
             {"panic", "慌", "example"},
             {"entertainment", "娯", "example"},
             {"luo", "羅", "example"},
@@ -273,19 +277,19 @@ public class MainActivity extends AppCompatActivity {
             {"peak", "峰", "example"},
             {"brewing", "醸", "example"},
             {"funeral", "弔", "example"},
-            {"b", "乙", "example"},
+            {"witty", "乙", "example"},
             {"juice", "汁", "example"},
-            {"ny", "尼", "example"},
-            {"all over", "遍", "example"},
-            {"weigh", "衡", "example"},
-            {"kaoru", "薫", "example"},
+            {"nun", "尼", "example"},
+            {"pilgrimage", "遍", "example"},
+            {"equilibrium", "衡", "example"},
+            {"fragrant", "薫", "example"},
             {"hunting", "猟", "example"},
-            {"paragraph", "款", "example"},
+            {"subsection", "款", "example"},
             {"review", "閲", "example"},
             {"detect", "偵", "example"},
-            {"drink", "喝", "example"},
+            {"exclamation", "喝", "example"},
             {"dare", "敢", "example"},
-            {"tire", "胎", "example"},
+            {"womb", "胎", "example"},
             {"yeast", "酵", "example"},
             {"anger", "憤", "example"},
             {"pig", "豚", "example"},
@@ -295,29 +299,29 @@ public class MainActivity extends AppCompatActivity {
 
     String[][] KanjisH11 = {
             {"idiot", "痴", "example"},
-            {"move", "搬", "example"},
+            {"carrying", "搬", "example"},
             {"healing", "癒", "example"},
-            {"guo", "郭", "example"},
+            {"outer_fence", "郭", "example"},
             {"pee", "尿", "example"},
             {"fierce", "凶", "example"},
-            {"threw up", "吐", "example"},
+            {"threw_up", "吐", "example"},
             {"feast", "宴", "example"},
             {"guest", "賓", "example"},
             {"captive", "虜", "example"},
             {"pottery", "陶", "example"},
             {"bell", "鐘", "example"},
             {"regret", "憾", "example"},
-            {"kun", "昆", "example"},
+            {"descendant", "昆", "example"},
             {"crude", "粗", "example"},
-            {"order", "訂", "example"},
+            {"revision", "訂", "example"},
             {"umbrella", "傘", "example"},
             {"ride", "騎", "example"},
             {"rather", "寧", "example"},
             {"follow", "循", "example"},
             {"endure", "忍", "example"},
             {"lazy", "怠", "example"},
-            {"such as", "如", "example"},
-            {"laos", "寮", "example"},
+            {"such_as", "如", "example"},
+            {"dorm", "寮", "example"},
             {"lead", "鉛", "example"},
             {"beads", "珠", "example"},
             {"condense", "凝", "example"},
@@ -331,21 +335,21 @@ public class MainActivity extends AppCompatActivity {
             {"seam", "縫", "example"},
             {"monk", "僧", "example"},
             {"overlook", "眺", "example"},
-            {"don", "唐", "example"},
+            {"sudden", "唐", "example"},
             {"kure", "呉", "example"},
-            {"where", "凡", "example"},
+            {"mediocrity", "凡", "example"},
             {"rest", "憩", "example"},
             {"ditch", "溝", "example"},
-            {"christine", "恭", "example"},
+            {"respect", "恭", "example"},
             {"mow", "刈", "example"},
             {"sleep", "睡", "example"},
-            {"wrong", "錯", "example"},
-            {"bo", "伯", "example"},
+            {"confusion", "錯", "example"},
+            {"earl", "伯", "example"},
             {"mausoleum", "陵", "example"},
             {"fog", "霧", "example"},
             {"soul", "魂", "example"},
             {"disadvantage", "弊", "example"},
-            {"concubine", "妃", "example"},
+            {"princess", "妃", "example"},
             {"ship", "舶", "example"},
             {"hungry", "餓", "example"},
             {"poor", "窮", "example"},
@@ -356,52 +360,52 @@ public class MainActivity extends AppCompatActivity {
             {"blade", "刃", "example"},
             {"bind", "縛", "example"},
             {"calendar", "暦", "example"},
-            {"should", "宜", "example"}
+            {"suitability", "宜", "example"}
     };
 
     String[][] KanjisH10 = {
             {"fantasy", "幻", "example"},
-            {"cook", "煮", "example"},
+            {"boil", "煮", "example"},
             {"princess", "姫", "example"},
             {"oath", "誓", "example"},
-            {"put", "把", "example"},
+            {"grasp", "把", "example"},
             {"practice", "践", "example"},
             {"present", "呈", "example"},
             {"sparse", "疎", "example"},
-            {"yang", "仰", "example"},
-            {"just", "剛", "example"},
+            {"supine", "仰", "example"},
+            {"strong", "剛", "example"},
             {"disease", "疾", "example"},
-            {"sign", "征", "example"},
-            {"sui", "砕", "example"},
+            {"conquest", "征", "example"},
+            {"smashing", "砕", "example"},
             {"song", "謡", "example"},
             {"bride", "嫁", "example"},
             {"modest", "謙", "example"},
-            {"wait", "伺", "example"},
-            {"sigh", "嘆", "example"},
+            {"call", "伺", "example"},
+            {"grief", "嘆", "example"},
             {"bacteria", "菌", "example"},
             {"frequency", "頻", "example"},
-            {"qin", "琴", "example"},
+            {"japanese_harp", "琴", "example"},
             {"shelf", "棚", "example"},
-            {"cool", "酷", "example"},
-            {"slaughter", "宰", "example"},
-            {"gallery", "廊", "example"},
+            {"terrible", "酷", "example"},
+            {"governor", "宰", "example"},
+            {"corridor", "廊", "example"},
             {"lonely", "寂", "example"},
-            {"volt", "伏", "example"},
-            {"acer", "碁", "example"},
+            {"bow", "伏", "example"},
+            {"go", "碁", "example"},
             {"vulgar", "俗", "example"},
             {"desert", "漠", "example"},
             {"evil", "邪", "example"},
             {"crystal", "晶", "example"},
             {"ink", "墨", "example"},
-            {"town", "鎮", "example"},
+            {"suppression", "鎮", "example"},
             {"hole", "洞", "example"},
             {"shoe", "履", "example"},
             {"inferior", "劣", "example"},
             {"beat", "殴", "example"},
             {"pregnant", "娠", "example"},
-            {"bong", "奉", "example"},
+            {"enshrine", "奉", "example"},
             {"worry", "憂", "example"},
-            {"park", "朴", "example"},
+            {"docile", "朴", "example"},
             {"pavilion", "亭", "example"},
             {"strange", "怪", "example"},
             {"drunk", "酔", "example"},
@@ -411,7 +415,7 @@ public class MainActivity extends AppCompatActivity {
             {"moisturize", "潤", "example"},
             {"mourn", "悼", "example"},
             {"lack", "乏", "example"},
-            {"the", "該", "example"},
+            {"corresponding", "該", "example"},
             {"go", "赴", "example"},
             {"mulberry", "桑", "example"},
             {"pith", "髄", "example"},
@@ -422,141 +426,141 @@ public class MainActivity extends AppCompatActivity {
             {"hungry", "飢", "example"},
             {"pong", "傍", "example"},
             {"plague", "疫", "example"},
-            {"tired", "累", "example"}
+            {"cumulative", "累", "example"}
     };
-    String[][] KanjisH9  = {
-            {"false", "虚", "example"},
+    String[][] KanjisH9 = {
+            {"void", "虚", "example"},
             {"soul", "霊", "example"},
             {"regret", "悔", "example"},
             {"decree", "諭", "example"},
             {"awful", "惨", "example"},
-            {"oppressive", "虐", "example"},
+            {"ppressive", "虐", "example"},
             {"turn", "翻", "example"},
             {"fall", "墜", "example"},
-            {"billabong", "沼", "example"},
-            {"according to", "据", "example"},
-            {"xu", "徐", "example"},
-            {"take", "搭", "example"},
+            {"swamp", "沼", "example"},
+            {"set", "据", "example"},
+            {"gradually", "徐", "example"},
+            {"tower", "搭", "example"},
             {"shield", "盾", "example"},
             {"waterfall", "滝", "example"},
             {"rail", "軌", "example"},
-            {"harm", "妨", "example"},
+            {"hinder", "妨", "example"},
             {"rub", "擦", "example"},
             {"whale", "鯨", "example"},
-            {"zhuang", "荘", "example"},
+            {"mansion", "荘", "example"},
             {"promise", "諾", "example"},
-            {"mine", "雷", "example"},
+            {"thunder", "雷", "example"},
             {"drift", "漂", "example"},
             {"bosom", "懐", "example"},
-            {"survey", "勘", "example"},
+            {"intuition", "勘", "example"},
             {"plant", "栽", "example"},
-            {"turn", "拐", "example"},
+            {"abduction", "拐", "example"},
             {"uselessly", "駄", "example"},
             {"add", "添", "example"},
             {"crown", "冠", "example"},
             {"oblique", "斜", "example"},
             {"wave", "浪", "example"},
-            {"nitrous", "亜", "example"},
+            {"second_place", "亜", "example"},
             {"fraud", "詐", "example"},
             {"altar", "壇", "example"},
-            {"isao", "勲", "example"},
+            {"medal", "勲", "example"},
             {"magic", "魔", "example"},
             {"reward", "酬", "example"},
             {"purple", "紫", "example"},
-            {"grain", "紋", "example"},
+            {"crest", "紋", "example"},
             {"wholesale", "卸", "example"},
             {"column", "欄", "example"},
-            {"yi", "逸", "example"},
-            {"shore", "涯", "example"},
+            {"deviate", "逸", "example"},
+            {"lifetime", "涯", "example"},
             {"develop", "拓", "example"},
             {"prison", "獄", "example"},
             {"yet", "尚", "example"},
             {"carved", "彫", "example"},
-            {"wen", "穏", "example"},
-            {"sensible", "顕", "example"},
-            {"opportunely", "巧", "example"},
+            {"calm", "穏", "example"},
+            {"remarkable", "顕", "example"},
+            {"skillful", "巧", "example"},
             {"spear", "矛", "example"},
             {"wall", "垣", "example"},
-            {"bully", "欺", "example"},
+            {"deceive", "欺", "example"},
             {"fish", "釣", "example"},
             {"makeup", "粧", "example"},
-            {"su", "粛", "example"},
+            {"suppression", "粛", "example"},
             {"stupid", "愚", "example"},
-            {"suffer", "遭", "example"},
+            {"encounter", "遭", "example"},
             {"frame", "架", "example"},
             {"ghost", "鬼", "example"},
-            {"shu", "庶", "example"},
+            {"common", "庶", "example"},
             {"baby", "稚", "example"},
             {"nourish", "滋", "example"}
     };
 
-    String[][] KanjisH8  = {
-            {"gimlet", "雰", "example"},
+    String[][] KanjisH8 = {
+            {"mood", "雰", "example"},
             {"encounter", "遇", "example"},
             {"advisory", "諮", "example"},
             {"narrow", "狭", "example"},
-            {"eminent", "卓", "example"},
+            {"table", "卓", "example"},
             {"grain", "糧", "example"},
             {"book", "簿", "example"},
             {"furnace", "炉", "example"},
             {"special", "殊", "example"},
             {"colonization", "殖", "example"},
             {"warship", "艦", "example"},
-            {"generation", "輩", "example"},
+            {"fellow", "輩", "example"},
             {"odd", "奇", "example"},
-            {"slow", "慢", "example"},
-            {"seek", "謀", "example"},
+            {"pride", "慢", "example"},
+            {"plot", "謀", "example"},
             {"beat", "拍", "example"},
             {"length", "丈", "example"},
-            {"hiroshi", "寛", "example"},
+            {"relax", "寛", "example"},
             {"cover", "覆", "example"},
             {"cell", "胞", "example"},
             {"partition", "隔", "example"},
-            {"kiyoshi", "浄", "example"},
-            {"no", "没", "example"},
-            {"free time", "暇", "example"},
-            {"chaste", "貞", "example"},
+            {"purification", "浄", "example"},
+            {"discard", "没", "example"},
+            {"free_time", "暇", "example"},
+            {"chastity", "貞", "example"},
             {"view", "鑑", "example"},
-            {"yin", "陰", "example"},
+            {"shadow", "陰", "example"},
             {"drop", "滴", "example"},
             {"inscription", "銘", "example"},
             {"follow", "随", "example"},
-            {"strong", "烈", "example"},
+            {"intense", "烈", "example"},
             {"searching", "尋", "example"},
             {"draft", "稿", "example"},
             {"red", "丹", "example"},
-            {"kei", "啓", "example"},
-            {"mound", "丘", "example"},
+            {"revelation", "啓", "example"},
+            {"hill", "丘", "example"},
             {"building", "棟", "example"},
             {"soil", "壌", "example"},
-            {"overflow", "漫", "example"},
-            {"mysterious", "玄", "example"},
+            {"comic", "漫", "example"},
+            {"expert", "玄", "example"},
             {"stick", "粘", "example"},
             {"realize", "悟", "example"},
             {"shop", "舗", "example"},
             {"pregnant", "妊", "example"},
-            {"soar", "騰", "example"},
-            {"then", "遂", "example"},
+            {"rise", "騰", "example"},
+            {"finally", "遂", "example"},
             {"mad", "狂", "example"},
-            {"toki", "岐", "example"},
+            {"crossroads", "岐", "example"},
             {"latitude", "緯", "example"},
-            {"train", "培", "example"},
+            {"culture", "培", "example"},
             {"decline", "衰", "example"},
-            {"craft", "艇", "example"},
+            {"boat", "艇", "example"},
             {"bend", "屈", "example"},
-            {"light", "淡", "example"},
-            {"draw", "抽", "example"},
-            {"put on", "披", "example"},
-            {"ting", "廷", "example"},
-            {"quasi-", "准", "example"},
-            {"susumu", "奨", "example"},
+            {"pale", "淡", "example"},
+            {"abstract", "抽", "example"},
+            {"show", "披", "example"},
+            {"court", "廷", "example"},
+            {"associate", "准", "example"},
+            {"recommendation", "奨", "example"},
             {"soak", "浸", "example"},
-            {"retained", "剰", "example"},
-            {"bravery", "胆", "example"},
+            {"surplus", "剰", "example"},
+            {"gall", "胆", "example"},
             {"fiber", "繊", "example"}
     };
 
-    String[][] KanjisH7  = {
+    String[][] KanjisH7 = {
             {"rotten", "腐", "example"},
             {"foot", "脚", "example"},
             {"exhausted", "尽", "example"},
@@ -564,33 +568,33 @@ public class MainActivity extends AppCompatActivity {
             {"slip", "滑", "example"},
             {"solitary", "孤", "example"},
             {"inflammation", "炎", "example"},
-            {"pay", "賠", "example"},
-            {"relying on", "挟", "example"},
+            {"reparation", "賠", "example"},
+            {"sandwich", "挟", "example"},
             {"life", "寿", "example"},
             {"stubborn", "頑", "example"},
-            {"lock", "鎖", "example"},
+            {"chain", "鎖", "example"},
             {"color", "彩", "example"},
             {"rub", "摩", "example"},
             {"encourage", "励", "example"},
             {"bright", "輝", "example"},
-            {"store", "蓄", "example"},
+            {"accumulation", "蓄", "example"},
             {"axis", "軸", "example"},
             {"patrol", "巡", "example"},
-            {"jia", "稼", "example"},
+            {"earn", "稼", "example"},
             {"instant", "瞬", "example"},
-            {"gun", "砲", "example"},
+            {"cannon", "砲", "example"},
             {"spray", "噴", "example"},
             {"boast", "誇", "example"},
             {"auspicious", "祥", "example"},
-            {"animal sacrifice", "牲", "example"},
-            {"dark clouds", "曇", "example"},
+            {"animal_sacrifice", "牲", "example"},
+            {"clouds", "曇", "example"},
             {"rank", "秩", "example"},
             {"emperor", "帝", "example"},
             {"instigate", "唆", "example"},
             {"block", "阻", "example"},
-            {"thai", "泰", "example"},
+            {"peace", "泰", "example"},
             {"bribe", "賄", "example"},
-            {"flutter", "撲", "example"},
+            {"bruise", "撲", "example"},
             {"cave", "堀", "example"},
             {"chrysanthemum", "菊", "example"},
             {"twist", "絞", "example"},
@@ -602,48 +606,48 @@ public class MainActivity extends AppCompatActivity {
             {"leak", "漏", "example"},
             {"celebrate", "慶", "example"},
             {"fierce", "猛", "example"},
-            {"fang", "芳", "example"},
+            {"aromatic", "芳", "example"},
             {"punish", "懲", "example"},
             {"sword", "剣", "example"},
-            {"akira", "彰", "example"},
+            {"award", "彰", "example"},
             {"chess", "棋", "example"},
             {"permanent", "恒", "example"},
             {"raise", "揚", "example"},
             {"risk", "冒", "example"},
-            {"lun", "倫", "example"},
-            {"old", "陳", "example"},
+            {"ethnicity", "倫", "example"},
+            {"display", "陳", "example"},
             {"recall", "憶", "example"},
             {"latent", "潜", "example"},
-            {"gram", "克", "example"},
+            {"win", "克", "example"},
             {"mountain", "岳", "example"},
             {"general", "概", "example"},
             {"arrest", "拘", "example"},
             {"silence", "黙", "example"},
             {"partial", "偏", "example"}
     };
-    String[][] KanjisH6  = {
-            {"howe", "豪", "example"},
+    String[][] KanjisH6 = {
+            {"luxury", "豪", "example"},
             {"stagnant", "滞", "example"},
-            {"micro-", "微", "example"},
+            {"micro", "微", "example"},
             {"grand", "隆", "example"},
             {"disease", "症", "example"},
             {"temporarily", "暫", "example"},
             {"cap", "帽", "example"},
             {"liver", "肝", "example"},
-            {"call", "喚", "example"},
-            {"wonderful", "妙", "example"},
+            {"shout", "喚", "example"},
+            {"peculiar", "妙", "example"},
             {"withered", "枯", "example"},
             {"search", "索", "example"},
             {"raid", "襲", "example"},
-            {"earnest", "懇", "example"},
+            {"intimacy", "懇", "example"},
             {"handle", "柄", "example"},
             {"shock", "驚", "example"},
             {"hemp", "麻", "example"},
             {"drug", "剤", "example"},
-            {"lai", "瀬", "example"},
+            {"ford", "瀬", "example"},
             {"interest", "趣", "example"},
-            {"xian", "陥", "example"},
-            {"religious purification", "斎", "example"},
+            {"stratagem", "陥", "example"},
+            {"religious", "斎", "example"},
             {"penetrate", "貫", "example"},
             {"immortal", "仙", "example"},
             {"comfort", "慰", "example"},
@@ -652,50 +656,50 @@ public class MainActivity extends AppCompatActivity {
             {"season", "旬", "example"},
             {"and", "兼", "example"},
             {"purport", "旨", "example"},
-            {"which is", "即", "example"},
+            {"immediately", "即", "example"},
             {"willow", "柳", "example"},
             {"false", "偽", "example"},
             {"relatively", "較", "example"},
             {"supremacy", "覇", "example"},
             {"symbol", "符", "example"},
             {"detailed", "詳", "example"},
-            {"arrived in", "抵", "example"},
+            {"resist", "抵", "example"},
             {"threaten", "脅", "example"},
             {"hate", "憎", "example"},
             {"willing", "肯", "example"},
             {"luxuriant", "茂", "example"},
-            {"xi", "犠", "example"},
+            {"sacrifice", "犠", "example"},
             {"distance", "距", "example"},
             {"elegant", "雅", "example"},
             {"decorations", "飾", "example"},
             {"dry", "燥", "example"},
             {"network", "網", "example"},
             {"dragon", "竜", "example"},
-            {"complicated", "繁", "example"},
+            {"prosperity", "繁", "example"},
             {"livestock", "畜", "example"},
             {"wing", "翼", "example"},
             {"lagoon", "潟", "example"},
             {"enchantment", "魅", "example"},
             {"unpleasant", "嫌", "example"},
-            {"place", "坊", "example"},
-            {"hitoshi", "斉", "example"},
-            {"apply", "敷", "example"},
-            {"own", "擁", "example"},
-            {"sphere", "圏", "example"},
+            {"boy", "坊", "example"},
+            {"simultaneous", "斉", "example"},
+            {"floor", "敷", "example"},
+            {"advocacy", "擁", "example"},
+            {"area", "圏", "example"},
             {"punish", "罰", "example"},
             {"destroy", "滅", "example"},
             {"foundation", "礎", "example"}
     };
-    String[][] KanjisH5  = {
+    String[][] KanjisH5 = {
             {"promote", "促", "example"},
-            {"cautious", "慎", "example"},
-            {"control", "控", "example"},
+            {"abstain", "慎", "example"},
+            {"refrain", "控", "example"},
             {"grip", "握", "example"},
             {"surname", "姓", "example"},
             {"cylinder", "筒", "example"},
-            {"handsome", "俊", "example"},
+            {"goodness", "俊", "example"},
             {"grain", "粒", "example"},
-            {"shibu", "渋", "example"},
+            {"bitter", "渋", "example"},
             {"gun", "銃", "example"},
             {"great", "偉", "example"},
             {"carry", "携", "example"},
@@ -706,63 +710,63 @@ public class MainActivity extends AppCompatActivity {
             {"include", "括", "example"},
             {"driving", "駆", "example"},
             {"through", "透", "example"},
-            {"tianjin", "津", "example"},
+            {"wharf", "津", "example"},
             {"wall", "壁", "example"},
-            {"rice plant", "稲", "example"},
+            {"rice_plant", "稲", "example"},
             {"tatami", "畳", "example"},
             {"crack", "裂", "example"},
-            {"min", "敏", "example"},
+            {"agile", "敏", "example"},
             {"yes", "是", "example"},
-            {"row", "排", "example"},
+            {"exhaustion", "排", "example"},
             {"abundant", "裕", "example"},
             {"firm", "堅", "example"},
-            {"chicago", "芝", "example"},
-            {"gang", "綱", "example"},
+            {"lawn", "芝", "example"},
+            {"rope", "綱", "example"},
             {"skin", "膚", "example"},
             {"handling", "扱", "example"},
-            {"attend", "顧", "example"},
+            {"patron", "顧", "example"},
             {"litigation", "訟", "example"},
-            {"give up", "戒", "example"},
-            {"well-being", "祉", "example"},
+            {"commandment", "戒", "example"},
+            {"well_being", "祉", "example"},
             {"reputation", "誉", "example"},
-            {"huan", "歓", "example"},
+            {"delight", "歓", "example"},
             {"recommendation", "勧", "example"},
             {"uproar", "騒", "example"},
-            {"valve", "閥", "example"},
+            {"faction", "閥", "example"},
             {"armor", "甲", "example"},
             {"wash", "濯", "example"},
             {"rope", "縄", "example"},
             {"cat", "猫", "example"},
-            {"yura", "揺", "example"},
+            {"shake", "揺", "example"},
             {"avoid", "免", "example"},
             {"already", "既", "example"},
             {"recommend", "薦", "example"},
             {"tower", "塔", "example"},
-            {"next to", "隣", "example"},
+            {"next_to", "隣", "example"},
             {"boil", "沸", "example"},
-            {"china", "華", "example"},
+            {"glamorous", "華", "example"},
             {"model", "範", "example"},
             {"hidden", "隠", "example"},
             {"wise", "哲", "example"},
             {"confectionery", "菓", "example"},
-            {"chinese fir", "杉", "example"},
-            {"shaku", "釈", "example"},
-            {"a few", "幾", "example"},
+            {"chinese_fir", "杉", "example"},
+            {"pardon", "釈", "example"},
+            {"a_few", "幾", "example"},
             {"proper", "妥", "example"},
             {"prestige", "威", "example"}
     };
 
-    String[][] KanjisH3  = {
+    String[][] KanjisH3 = {
             {"dimension", "維", "example"},
             {"soft", "軟", "example"},
-            {"bang", "浜", "example"},
-            {"precipitation", "沈", "example"},
+            {"beach", "浜", "example"},
+            {"sinking", "沈", "example"},
             {"base", "塁", "example"},
             {"state", "邦", "example"},
             {"freeze", "凍", "example"},
             {"dispatch", "遣", "example"},
             {"smoke", "煙", "example"},
-            {"anti-", "抗", "example"},
+            {"anti", "抗", "example"},
             {"male", "雄", "example"},
             {"love", "恋", "example"},
             {"tight", "緊", "example"},
@@ -776,14 +780,14 @@ public class MainActivity extends AppCompatActivity {
             {"treasure", "珍", "example"},
             {"official", "僚", "example"},
             {"lucky", "吉", "example"},
-            {"secondhand", "喫", "example"},
+            {"enjoy", "喫", "example"},
             {"tread", "踏", "example"},
             {"corrupted", "壊", "example"},
             {"debt", "債", "example"},
             {"instrument", "儀", "example"},
             {"dissolve", "溶", "example"},
-            {"ji", "継", "example"},
-            {"dou", "闘", "example"},
+            {"continue", "継", "example"},
+            {"fight", "闘", "example"},
             {"burial", "葬", "example"},
             {"avoid", "避", "example"},
             {"tear", "涙", "example"},
@@ -791,15 +795,15 @@ public class MainActivity extends AppCompatActivity {
             {"catch", "逮", "example"},
             {"sharpness", "鋭", "example"},
             {"force", "迫", "example"},
-            {"be puzzled", "惑", "example"},
+            {"be_puzzled", "惑", "example"},
             {"collapse", "崩", "example"},
             {"hearing", "聴", "example"},
-            {"take off", "脱", "example"},
-            {"spread", "塗", "example"},
+            {"take_off", "脱", "example"},
+            {"paint", "塗", "example"},
             {"eaves", "軒", "example"},
             {"tighten", "締", "example"},
-            {"hold", "執", "example"},
-            {"call", "叫", "example"},
+            {"tenacity", "執", "example"},
+            {"yell", "叫", "example"},
             {"room", "房", "example"},
             {"withdraw", "撤", "example"},
             {"cut", "削", "example"},
@@ -808,26 +812,26 @@ public class MainActivity extends AppCompatActivity {
             {"dried", "乾", "example"},
             {"front", "陣", "example"},
             {"for", "為", "example"},
-            {"curb", "抑", "example"},
+            {"suppress", "抑", "example"},
             {"pray", "祈", "example"},
-            {"-option", "択", "example"},
-            {"beautiful", "秀", "example"},
+            {"option", "択", "example"},
+            {"excellent", "秀", "example"},
             {"hair", "髪", "example"},
             {"features", "徴", "example"},
             {"busy", "忙", "example"},
             {"bullet", "弾", "example"}
     };
 
-    String[][] KanjisH4  = {
+    String[][] KanjisH4 = {
             {"compensate", "償", "example"},
             {"conforming", "拠", "example"},
             {"refuse", "拒", "example"},
             {"punishment", "刑", "example"},
             {"mound", "塚", "example"},
-            {"cause", "致", "example"},
+            {"do", "致", "example"},
             {"repetitive", "繰", "example"},
             {"tail", "尾", "example"},
-            {"trace", "描", "example"},
+            {"draw", "描", "example"},
             {"sweat", "汗", "example"},
             {"bell", "鈴", "example"},
             {"plate", "盤", "example"},
@@ -836,23 +840,23 @@ public class MainActivity extends AppCompatActivity {
             {"companion", "伴", "example"},
             {"hang", "懸", "example"},
             {"wet", "湿", "example"},
-            {"deed", "契", "example"},
-            {"kei", "掲", "example"},
+            {"contract", "契", "example"},
+            {"bulletin", "掲", "example"},
             {"jump", "躍", "example"},
             {"abandoned", "棄", "example"},
             {"bottle", "瓶", "example"},
             {"mansion", "邸", "example"},
-            {"saki", "咲", "example"},
-            {"also", "還", "example"},
+            {"bloom", "咲", "example"},
+            {"return", "還", "example"},
             {"summon", "召", "example"},
             {"consider", "慮", "example"},
             {"can", "缶", "example"},
             {"weir", "隻", "example"},
             {"frame", "枠", "example"},
             {"fat", "脂", "example"},
-            {"megumi", "恵", "example"},
+            {"grace", "恵", "example"},
             {"dew", "露", "example"},
-            {"off the coast", "沖", "example"},
+            {"off_the_coast", "沖", "example"},
             {"slow", "緩", "example"},
             {"skin", "肌", "example"},
             {"need", "需", "example"},
@@ -866,80 +870,80 @@ public class MainActivity extends AppCompatActivity {
             {"end", "端", "example"},
             {"obtain", "獲", "example"},
             {"mud", "泥", "example"},
-            {"併", "併", "example"},
-            {"toru", "徹", "example"},
+            {"both", "併", "example"},
+            {"go_through", "徹", "example"},
             {"rush", "衝", "example"},
             {"focal", "焦", "example"},
-            {"wins", "奪", "example"},
+            {"steal", "奪", "example"},
             {"corner", "隅", "example"},
             {"riverside", "浦", "example"},
-            {"i", "偶", "example"},
+            {"even", "偶", "example"},
             {"analyze", "析", "example"},
-            {"xin", "辛", "example"},
-            {"mill", "磨", "example"},
-            {"yuzuru", "譲", "example"},
+            {"spicy", "辛", "example"},
+            {"polish", "磨", "example"},
+            {"yield", "譲", "example"},
             {"call", "称", "example"},
-            {"pick", "挑", "example"},
+            {"challenge", "挑", "example"},
             {"lure", "誘", "example"},
-            {"numerous", "紛", "example"}
+            {"distract", "紛", "example"}
     };
 
-    String[][] KanjisH2  = {
+    String[][] KanjisH2 = {
             {"resident", "駐", "example"},
             {"introduce", "紹", "example"},
             {"well", "井", "example"},
             {"hire", "雇", "example"},
-            {"for", "替", "example"},
+            {"replacement", "替", "example"},
             {"fresh", "鮮", "example"},
             {"gifts", "贈", "example"},
             {"thin", "薄", "example"},
-            {"oh", "奥", "example"},
+            {"inner_part", "奥", "example"},
             {"packed", "詰", "example"},
             {"hang", "掛", "example"},
             {"double", "双", "example"},
             {"thorn", "刺", "example"},
-            {"to", "到", "example"},
+            {"arrival", "到", "example"},
             {"prison", "監", "example"},
             {"ring", "環", "example"},
             {"sleeping", "寝", "example"},
             {"examine", "審", "example"},
             {"thief", "盗", "example"},
             {"complaint", "訴", "example"},
-            {"悩", "悩", "example"},
-            {"please", "御", "example"},
+            {"trouble", "悩", "example"},
+            {"honorable", "御", "example"},
             {"shadow", "影", "example"},
-            {"attack", "撃", "example"},
-            {"shortage", "荒", "example"},
+            {"shot", "撃", "example"},
+            {"rage", "荒", "example"},
             {"assistant", "佐", "example"},
             {"nuclear", "核", "example"},
             {"hard", "硬", "example"},
             {"melt", "融", "example"},
             {"bury", "埋", "example"},
-            {"wataru", "渉", "example"},
+            {"negotiation", "渉", "example"},
             {"bag", "袋", "example"},
-            {"ring", "響", "example"},
+            {"sound", "響", "example"},
             {"blow", "吹", "example"},
             {"seal", "封", "example"},
             {"daughter", "娘", "example"},
             {"please", "請", "example"},
             {"attack", "攻", "example"},
-            {"kawasaki", "崎", "example"},
+            {"small_peninsula", "崎", "example"},
             {"virtuous", "賢", "example"},
             {"supervise", "督", "example"},
             {"urge", "催", "example"},
             {"arm", "腕", "example"},
             {"and", "及", "example"},
             {"bed", "床", "example"},
-            {"from", "離", "example"},
+            {"leave", "離", "example"},
             {"soft", "柔", "example"},
             {"pick", "摘", "example"},
-            {"lang", "郎", "example"},
+            {"man", "郎", "example"},
             {"temple", "殿", "example"},
             {"concentrated", "濃", "example"},
             {"shoulder", "肩", "example"},
             {"zero", "零", "example"},
             {"angry", "怒", "example"},
-            {"night", "泊", "example"},
+            {"stay", "泊", "example"},
             {"cup", "杯", "example"},
             {"vibration", "振", "example"},
             {"sweet", "甘", "example"},
@@ -950,32 +954,32 @@ public class MainActivity extends AppCompatActivity {
             {"all", "皆", "example"}
     };
 
-    String[][] KanjisH1  = {
+    String[][] KanjisH1 = {
             {"age", "歳", "example"},
-            {"versus", "与", "example"},
-            {"violate", "違", "example"},
+            {"giving", "与", "example"},
+            {"wrong", "違", "example"},
             {"europe", "欧", "example"},
-            {"is", "被", "example"},
-            {"ferry", "渡", "example"},
+            {"suffered", "被", "example"},
+            {"cross_over", "渡", "example"},
             {"contain", "含", "example"},
-            {"condition", "況", "example"},
+            {"situation", "況", "example"},
             {"sudden", "突", "example"},
             {"bay", "湾", "example"},
-            {"dissatisfied", "捜", "example"},
+            {"search", "捜", "example"},
             {"ultra", "超", "example"},
             {"cure", "療", "example"},
             {"catch", "捕", "example"},
             {"introduction", "介", "example"},
             {"welcome", "迎", "example"},
-            {"dealer", "販", "example"},
+            {"sales", "販", "example"},
             {"width", "幅", "example"},
             {"he", "彼", "example"},
-            {"sort", "般", "example"},
+            {"general", "般", "example"},
             {"dance", "舞", "example"},
             {"included", "込", "example"},
             {"change", "換", "example"},
-            {"take up", "占", "example"},
-            {"lai", "頼", "example"},
+            {"take_up", "占", "example"},
+            {"ask", "頼", "example"},
             {"way", "途", "example"},
             {"unplug", "抜", "example"},
             {"stretch", "伸", "example"},
@@ -984,14 +988,14 @@ public class MainActivity extends AppCompatActivity {
             {"marriage", "婚", "example"},
             {"age", "齢", "example"},
             {"float", "浮", "example"},
-            {"mortgage", "押", "example"},
-            {"inverted", "倒", "example"},
-            {"the", "了", "example"},
+            {"push", "押", "example"},
+            {"defeat", "倒", "example"},
+            {"end", "了", "example"},
             {"suffer", "患", "example"},
-            {"network", "絡", "example"},
+            {"entangle", "絡", "example"},
             {"raise", "募", "example"},
             {"payment", "払", "example"},
-            {"noboru", "昇", "example"},
+            {"rise", "昇", "example"},
             {"late", "遅", "example"},
             {"fragrant", "香", "example"},
             {"more", "更", "example"},
@@ -1003,11 +1007,11 @@ public class MainActivity extends AppCompatActivity {
             {"more", "越", "example"},
             {"enterprises", "企", "example"},
             {"touch", "触", "example"},
-            {"according to", "依", "example"},
+            {"according_to", "依", "example"},
             {"membership", "籍", "example"},
             {"dirty", "汚", "example"},
             {"mutual", "互", "example"},
-            {"kanazawa", "沢", "example"},
+            {"swamp", "沢", "example"},
             {"escape", "逃", "example"},
             {"aid", "援", "example"},
             {"pour", "傾", "example"},
@@ -1027,38 +1031,38 @@ public class MainActivity extends AppCompatActivity {
             {"tree", "樹", "example"},
             {"to", "至", "example"},
             {"sect", "宗", "example"},
-            {"chu", "宙", "example"},
+            {"air", "宙", "example"},
             {"word", "詞", "example"},
-            {"speak", "操", "example"},
+            {"operation", "操", "example"},
             {"birth", "誕", "example"},
-            {"filial", "孝", "example"},
-            {"machine", "机", "example"},
+            {"think", "孝", "example"},
+            {"desk", "机", "example"},
             {"reason", "訳", "example"},
-            {"look", "看", "example"},
-            {"play", "奏", "example"},
+            {"nurse", "看", "example"},
+            {"play_instrument", "奏", "example"},
             {"township", "郷", "example"},
             {"gray", "灰", "example"},
-            {"already", "己", "example"},
+            {"myself", "己", "example"},
             {"loyal", "忠", "example"},
             {"along", "沿", "example"},
             {"honest", "誠", "example"},
-            {"haiku", "俳", "example"},
+            {"japanese_poetry", "俳", "example"},
             {"saint", "聖", "example"},
             {"tide", "潮", "example"},
             {"steel", "鋼", "example"},
-            {"length", "縦", "example"},
+            {"vertical", "縦", "example"},
             {"benevolence", "仁", "example"},
             {"hole", "穴", "example"},
             {"warm", "暖", "example"},
             {"bright", "朗", "example"},
             {"lung", "肺", "example"},
             {"mature", "熟", "example"},
-            {"steps to the throne", "陛", "example"},
+            {"majesty", "陛", "example"},
             {"sugar", "糖", "example"},
-            {"you see", "覧", "example"},
-            {"fen", "奮", "example"},
-            {"rear", "后", "example"},
-            {"class", "班", "example"},
+            {"see", "覧", "example"},
+            {"enthusiasm", "奮", "example"},
+            {"queen", "后", "example"},
+            {"group", "班", "example"},
             {"inch", "寸", "example"},
             {"magnetic", "磁", "example"},
             {"hang", "垂", "example"},
@@ -1083,7 +1087,7 @@ public class MainActivity extends AppCompatActivity {
             {"follow", "従", "example"},
             {"young", "幼", "example"},
             {"expansion", "拡", "example"},
-            {"on", "就", "example"},
+            {"completion", "就", "example"},
             {"different", "異", "example"},
             {"severe", "厳", "example"},
             {"discard", "捨", "example"},
@@ -1094,10 +1098,10 @@ public class MainActivity extends AppCompatActivity {
             {"red", "紅", "example"},
             {"book", "冊", "example"},
             {"declare", "宣", "example"},
-            {"hold", "盛", "example"},
+            {"assortment", "盛", "example"},
             {"egg", "卵", "example"},
             {"emperor", "皇", "example"},
-            {"face", "臨", "example"},
+            {"coming", "臨", "example"},
             {"dry", "干", "example"},
             {"top", "頂", "example"},
             {"source", "源", "example"},
@@ -1117,18 +1121,18 @@ public class MainActivity extends AppCompatActivity {
     };
 
     String[][] KanjisG6_2 = {
-            {"the", "著", "example"},
+            {"author", "著", "example"},
             {"magazine", "誌", "example"},
             {"engraved", "刻", "example"},
-            {"yu", "宇", "example"},
+            {"universe", "宇", "example"},
             {"want", "欲", "example"},
             {"pain", "痛", "example"},
             {"sheet", "枚", "example"},
             {"mail", "郵", "example"},
-            {"cut", "裁", "example"},
+            {"court", "裁", "example"},
             {"explore", "探", "example"},
             {"bone", "骨", "example"},
-            {"th", "届", "example"},
+            {"notification", "届", "example"},
             {"roll", "巻", "example"},
             {"close", "閉", "example"},
             {"exhibition", "展", "example"},
@@ -1159,21 +1163,21 @@ public class MainActivity extends AppCompatActivity {
             {"authority", "権", "example"},
             {"already", "済", "example"},
             {"recognize", "認", "example"},
-            {"s", "論", "example"},
+            {"admonish", "論", "example"},
             {"leather", "革", "example"},
             {"suspect", "疑", "example"},
-            {"for", "供", "example"},
+            {"supply", "供", "example"},
             {"percentage", "割", "example"},
             {"difficult", "難", "example"},
             {"fill", "補", "example"},
             {"excellent", "優", "example"},
-            {"osamu", "収", "example"},
+            {"income", "収", "example"},
             {"house", "宅", "example"},
             {"police", "警", "example"},
             {"visit", "訪", "example"},
             {"area", "域", "example"},
-            {"dan", "担", "example"},
-            {"if the", "若", "example"},
+            {"responsible", "担", "example"},
+            {"young", "若", "example"},
             {"brain", "脳", "example"},
             {"warehouse", "蔵", "example"},
             {"segment", "段", "example"},
@@ -1183,7 +1187,7 @@ public class MainActivity extends AppCompatActivity {
             {"value", "値", "example"},
             {"place", "処", "example"},
             {"no", "否", "example"},
-            {"deposit", "存", "example"},
+            {"existance", "存", "example"},
             {"seat", "座", "example"},
             {"except", "除", "example"},
             {"drop", "降", "example"},
@@ -1200,12 +1204,12 @@ public class MainActivity extends AppCompatActivity {
             {"disorderly", "乱", "example"},
             {"send", "派", "example"},
             {"agency", "庁", "example"},
-            {"city", "城", "example"},
-            {"floor", "層", "example"},
+            {"castle", "城", "example"},
+            {"layer", "層", "example"},
             {"back", "裏", "example"},
-            {"industrious", "勤", "example"},
+            {"service", "勤", "example"},
             {"policy", "策", "example"},
-            {"sleepy", "困", "example"}
+            {"be_worried", "困", "example"}
     };
 
     String[][] KanjisG5_4 = {
@@ -1219,11 +1223,11 @@ public class MainActivity extends AppCompatActivity {
             {"rate", "率", "example"},
             {"group", "群", "example"},
             {"guard", "衛", "example"},
-            {"zhang", "張", "example"},
+            {"stretch", "張", "example"},
             {"righteousness", "義", "example"},
-            {"fast", "快", "example"},
+            {"pleasant", "快", "example"},
             {"review", "評", "example"},
-            {"made by", "製", "example"},
+            {"made_by", "製", "example"},
             {"award", "授", "example"},
             {"used", "慣", "example"},
             {"liquid", "液", "example"},
@@ -1233,32 +1237,32 @@ public class MainActivity extends AppCompatActivity {
             {"weave", "織", "example"},
             {"therefore", "故", "example"},
             {"valve", "弁", "example"},
-            {"vegetarian", "素", "example"},
+            {"elementary", "素", "example"},
             {"beneficial", "益", "example"},
             {"interest", "興", "example"},
             {"ore", "鉱", "example"},
             {"branch", "枝", "example"},
-            {"mark", "志", "example"},
+            {"will", "志", "example"},
             {"cotton", "綿", "example"},
             {"copper", "銅", "example"},
             {"belong", "属", "example"},
             {"plow", "耕", "example"},
             {"disaster", "災", "example"},
-            {"qian", "銭", "example"},
+            {"money", "銭", "example"},
             {"thank", "謝", "example"},
             {"provisional", "仮", "example"},
             {"congratulate", "賀", "example"},
-            {"ds", "徳", "example"},
+            {"virtue", "徳", "example"},
             {"sequence", "序", "example"},
             {"hut", "舎", "example"},
             {"enemy", "敵", "example"},
             {"acid", "酸", "example"},
-            {"cherry blossoms", "桜", "example"},
+            {"cherry_blossoms", "桜", "example"},
             {"sentence", "句", "example"},
             {"tomb", "墓", "example"},
             {"feed", "飼", "example"},
-            {"yep", "恩", "example"},
-            {"to", "往", "example"},
+            {"favor", "恩", "example"},
+            {"often", "往", "example"},
             {"fat", "肥", "example"},
             {"bale", "俵", "example"},
             {"eye", "眼", "example"},
@@ -1270,17 +1274,17 @@ public class MainActivity extends AppCompatActivity {
             {"long", "久", "example"},
             {"wife", "妻", "example"},
             {"violent", "暴", "example"},
-            {"medical registration", "険", "example"},
+            {"steep", "険", "example"},
             {"all", "均", "example"},
             {"pressure", "圧", "example"},
-            {"xu", "許", "example"},
+            {"forgiveness", "許", "example"},
             {"stay", "留", "example"},
             {"crime", "罪", "example"},
-            {"commission", "統", "example"},
+            {"sum", "統", "example"},
             {"fine", "精", "example"},
-            {"then", "則", "example"},
+            {"law", "則", "example"},
             {"measurement", "測", "example"},
-            {"yutaka", "豊", "example"},
+            {"rich", "豊", "example"},
             {"thick", "厚", "example"},
             {"insurance", "保", "example"},
             {"slightly", "略", "example"},
@@ -1289,24 +1293,24 @@ public class MainActivity extends AppCompatActivity {
             {"version", "版", "example"},
             {"damage", "損", "example"},
             {"buddha", "仏", "example"},
-            {"merit", "績", "example"},
+            {"achievement", "績", "example"},
             {"build", "築", "example"},
             {"mix", "混", "example"},
             {"house", "居", "example"},
             {"crude", "雑", "example"},
-            {"trick", "招", "example"},
+            {"invitation", "招", "example"},
             {"forever", "永", "example"},
-            {"print", "刊", "example"},
+            {"publication", "刊", "example"},
             {"image", "像", "example"},
             {"base", "基", "example"},
-            {"chan", "賛", "example"},
-            {"commit", "犯", "example"},
+            {"praise", "賛", "example"},
+            {"crime", "犯", "example"},
             {"price", "価", "example"},
             {"cloth", "布", "example"},
-            {"mention", "提", "example"},
+            {"offer", "提", "example"},
             {"response", "応", "example"},
             {"inspection", "検", "example"},
-            {"double", "複", "example"},
+            {"duplicate", "複", "example"},
             {"similar", "似", "example"},
             {"proof", "証", "example"},
             {"fan", "迷", "example"},
@@ -1317,23 +1321,23 @@ public class MainActivity extends AppCompatActivity {
             {"guide", "導", "example"},
             {"equipment", "備", "example"},
             {"loan", "貸", "example"},
-            {"lose", "輸", "example"},
+            {"transport", "輸", "example"},
             {"state", "述", "example"},
             {"military", "武", "example"},
             {"limit", "限", "example"},
             {"amount", "額", "example"},
             {"retreat", "退", "example"},
-            {"quasi-", "準", "example"},
+            {"quasi", "準", "example"},
             {"make", "造", "example"},
             {"skill", "技", "example"},
             {"recovery", "復", "example"},
             {"shift", "移", "example"},
-            {"more", "個", "example"},
-            {"non-", "非", "example"},
+            {"pieces", "個", "example"},
+            {"non", "非", "example"},
             {"fiscal", "財", "example"},
             {"knowledge", "識", "example"},
             {"journey", "程", "example"},
-            {"meet", "接", "example"},
+            {"contact", "接", "example"},
             {"effect", "効", "example"},
             {"old", "旧", "example"},
             {"division", "師", "example"},
@@ -1343,15 +1347,15 @@ public class MainActivity extends AppCompatActivity {
             {"editing", "編", "example"},
             {"responsibility", "責", "example"},
             {"collection", "採", "example"},
-            {"because", "因", "example"},
+            {"factor", "因", "example"},
             {"rich", "富", "example"},
             {"trade", "貿", "example"},
-            {"speak", "講", "example"},
+            {"lecture", "講", "example"},
             {"river", "河", "example"},
             {"suitable", "適", "example"},
             {"woman", "婦", "example"},
-            {"send", "寄", "example"},
-            {"i", "余", "example"},
+            {"approach", "寄", "example"},
+            {"extra", "余", "example"},
             {"ban", "禁", "example"}
     };
     String[][] KanjisG5_1 = {
@@ -1363,37 +1367,37 @@ public class MainActivity extends AppCompatActivity {
             {"system", "制", "example"},
             {"business", "務", "example"},
             {"gross", "総", "example"},
-            {"collar", "領", "example"},
-            {"assume", "設", "example"},
+            {"territory", "領", "example"},
+            {"setting", "設", "example"},
             {"support", "支", "example"},
             {"report", "報", "example"},
             {"solution", "解", "example"},
             {"capital", "資", "example"},
-            {"when", "際", "example"},
-            {"査", "査", "example"},
-            {"sentence", "判", "example"},
-            {"in", "在", "example"},
+            {"edge", "際", "example"},
+            {"inspection", "査", "example"},
+            {"size", "判", "example"},
+            {"presence", "在", "example"},
             {"matter", "件", "example"},
-            {"dan", "団", "example"},
-            {"any", "任", "example"},
+            {"gathering", "団", "example"},
+            {"assignment", "任", "example"},
             {"increase", "増", "example"},
-            {"situation", "情", "example"},
+            {"information", "情", "example"},
             {"show", "示", "example"},
             {"indeed", "確", "example"},
             {"power", "勢", "example"},
             {"less", "減", "example"},
-            {"allow", "容", "example"},
+            {"contain", "容", "example"},
             {"play", "演", "example"},
-            {"can", "能", "example"},
+            {"ability", "能", "example"},
             {"again", "再", "example"},
-            {"grid", "格", "example"},
-            {"live", "過", "example"},
+            {"ranking", "格", "example"},
+            {"failure", "過", "example"},
             {"tax", "税", "example"},
-            {"often", "常", "example"},
-            {"jo", "状", "example"},
-            {"ei", "営", "example"},
+            {"always", "常", "example"},
+            {"status", "状", "example"},
+            {"encampment", "営", "example"},
             {"office", "職", "example"},
-            {"can", "可", "example"},
+            {"possible", "可", "example"},
             {"construct", "構", "example"},
             {"ratio", "比", "example"},
             {"anti", "防", "example"},
@@ -1877,7 +1881,7 @@ public class MainActivity extends AppCompatActivity {
             {"weekday", "曜", "example"}
     };
     String[][] KanjisG2_2 = {
-            {"time", "時", "example" },
+            {"time", "時", "example"},
             {"before", "前", "example"},
             {"between", "間", "example"},
             {"east", "東", "example"},
@@ -2077,14 +2081,16 @@ public class MainActivity extends AppCompatActivity {
 
     // Finish array
     String[][] Finish = {
-        {
+            {
                     "finish",
                     "終", "了", "。"
-        }
+            }
     };
 
     // Initial setting
-    String[][] Kanjis = KanjisG1_2;
+    String[][] Kanjis = KanjisG1_1;
+    String SelectedLevel;
+
     int AnswerPosition;
 
     @Override
@@ -2093,85 +2099,138 @@ public class MainActivity extends AppCompatActivity {
         // Declarations.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final ImageView KanjiAnswerButtonLeft   = (ImageView) findViewById(R.id.KanjiAnswerButtonLeft);
+        final ImageView KanjiAnswerButtonLeft = (ImageView) findViewById(R.id.KanjiAnswerButtonLeft);
         final ImageView KanjiAnswerButtonMiddle = (ImageView) findViewById(R.id.KanjiAnswerButtonMiddle);
-        final ImageView KanjiAnswerButtonRight  = (ImageView) findViewById(R.id.KanjiAnswerButtonRight);
-        final ImageView LeftKanjiBack           = (ImageView) findViewById(R.id.LeftKanjiBack);
-        final ImageView MiddleKanjiBack         = (ImageView) findViewById(R.id.MiddleKanjiBack);
-        final ImageView RightKanjiBack          = (ImageView) findViewById(R.id.RightKanjiBack);
-        final ImageView NextButton              = (ImageView) findViewById(R.id.NextButton);
-        final ImageView image                   = (ImageView) findViewById(R.id.kanjiWindow);
-        final TextView  ReftKanji               = (TextView)  findViewById(R.id.LeftKanjiText);
-        final TextView  MiddleKanji             = (TextView)  findViewById(R.id.MiddleKanjiText);
-        final TextView  RightKanji              = (TextView)  findViewById(R.id.RightKanjiText);
-        final TextView  ExampleKanji            = (TextView)  findViewById(R.id.Answer);
+        final ImageView KanjiAnswerButtonRight = (ImageView) findViewById(R.id.KanjiAnswerButtonRight);
+        final ImageView LeftKanjiBack = (ImageView) findViewById(R.id.LeftKanjiBack);
+        final ImageView MiddleKanjiBack = (ImageView) findViewById(R.id.MiddleKanjiBack);
+        final ImageView RightKanjiBack = (ImageView) findViewById(R.id.RightKanjiBack);
+        final ImageView NextButton = (ImageView) findViewById(R.id.NextButton);
+        final ImageView image = (ImageView) findViewById(R.id.kanjiWindow);
+        final Button    selectLevel = findViewById(R.id.SelectLevel);
+        final TextView ReftKanji = (TextView) findViewById(R.id.LeftKanjiText);
+        final TextView MiddleKanji = (TextView) findViewById(R.id.MiddleKanjiText);
+        final TextView RightKanji = (TextView) findViewById(R.id.RightKanjiText);
+        final TextView ExampleKanji = (TextView) findViewById(R.id.Answer);
         // final EditText  QuestionsText           = (EditText)  findViewById(R.id.Questions);
-        final EditText  CorrectAnswersText      = (EditText)  findViewById(R.id.CorrectAnswers);
+        final EditText CorrectAnswersText = (EditText) findViewById(R.id.CorrectAnswers);
 
         // If user click the one of the Kanji, set visible to Next button/answer.
         // If user select correct Kanji, add score. And lock the number
         // until user click the next button.
-        int RightPosition  = 1;
+        int RightPosition = 1;
         int MiddlePosition = 2;
-        int LeftPosition   = 3;
+        int LeftPosition = 3;
 
-            KanjiAnswerButtonLeft.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    NextButton.setVisibility(View.VISIBLE);
-                    ExampleKanji.setVisibility(View.VISIBLE);
-                    LeftKanjiBack.setVisibility(View.VISIBLE);
-                    MiddleKanjiBack.setVisibility(View.VISIBLE);
-                    RightKanjiBack.setVisibility(View.VISIBLE);
-                    // If this selection is correct added up score.
-                    if(!LockNumberCount) {
-                        if (AnswerPosition == LeftPosition){
-                            CorrectAnswers = CorrectAnswers + 1;
-                        }
-                   }
-                    LockNumberCount = true;
-                    // Remove Array elements to prevent duplication
-                    Kanjis = ArrayUtils.remove(Kanjis, RandomNumber);
+        selectLevel.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                Spinner spinner = (Spinner)findViewById(R.id.spinner);
+                String text     = spinner.getSelectedItem().toString();
+                Questions       = 0;
+                CorrectAnswers  = 0;
+
+                switch(text)
+            {
+                case "G1_1": Kanjis = KanjisG1_1; break;
+                case "G1_2": Kanjis = KanjisG1_2; break;
+                case "G2_1": Kanjis = KanjisG2_1; break;
+                case "G2_2": Kanjis = KanjisG2_2; break;
+                case "G2_3": Kanjis = KanjisG2_3; break;
+                case "G3_1": Kanjis = KanjisG3_1; break;
+                case "G3_2": Kanjis = KanjisG3_2; break;
+                case "G3_3": Kanjis = KanjisG3_3; break;
+                case "G3_4": Kanjis = KanjisG3_4; break;
+                case "G3_5": Kanjis = KanjisG3_5; break;
+                case "G4_1": Kanjis = KanjisG4_1; break;
+                case "G4_2": Kanjis = KanjisG4_2; break;
+                case "G4_3": Kanjis = KanjisG4_3; break;
+                case "G4_4": Kanjis = KanjisG4_4; break;
+                case "G4_5": Kanjis = KanjisG4_5; break;
+                case "G5_1": Kanjis = KanjisG5_1; break;
+                case "G5_2": Kanjis = KanjisG5_2; break;
+                case "G5_3": Kanjis = KanjisG5_3; break;
+                case "G5_4": Kanjis = KanjisG5_4; break;
+                case "G6_1": Kanjis = KanjisG6_1; break;
+                case "G6_2": Kanjis = KanjisG6_2; break;
+                case "G6_3": Kanjis = KanjisG6_3; break;
+                case "G6_4": Kanjis = KanjisG6_4; break;
+                case "H1":   Kanjis = KanjisH1;   break;
+                case "H2":   Kanjis = KanjisH2;   break;
+                case "H3":   Kanjis = KanjisH3;   break;
+                case "H4":   Kanjis = KanjisH4;   break;
+                case "H5":   Kanjis = KanjisH5;   break;
+                case "H6":   Kanjis = KanjisH6;   break;
+                case "H7":   Kanjis = KanjisH7;   break;
+                case "H8":   Kanjis = KanjisH8;   break;
+                case "H9":   Kanjis = KanjisH9;   break;
+                case "H10":  Kanjis = KanjisH10;  break;
+                case "H11":  Kanjis = KanjisH11;   break;
+                case "H12":  Kanjis = KanjisH12;   break;
+                case "H13":  Kanjis = KanjisH13;   break;
+                case "H14":  Kanjis = KanjisH14;   break;
+                case "H15":  Kanjis = KanjisH15;   break;
+                default: break;
                 }
-            });
-            KanjiAnswerButtonMiddle.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    NextButton.setVisibility(View.VISIBLE);
-                    ExampleKanji.setVisibility(View.VISIBLE);
-                    LeftKanjiBack.setVisibility(View.VISIBLE);
-                    MiddleKanjiBack.setVisibility(View.VISIBLE);
-                    RightKanjiBack.setVisibility(View.VISIBLE);
-                    // If this selection is correct added up score.
-                    if(!LockNumberCount) {
-                          if (AnswerPosition == MiddlePosition){
-                             CorrectAnswers = CorrectAnswers + 1;
-                        }
+            }
+        });
+
+        KanjiAnswerButtonLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NextButton.setVisibility(View.VISIBLE);
+                ExampleKanji.setVisibility(View.VISIBLE);
+                LeftKanjiBack.setVisibility(View.VISIBLE);
+                MiddleKanjiBack.setVisibility(View.VISIBLE);
+                RightKanjiBack.setVisibility(View.VISIBLE);
+                // If this selection is correct added up score.
+                if (!LockNumberCount) {
+                    if (AnswerPosition == LeftPosition) {
+                        CorrectAnswers = CorrectAnswers + 1;
                     }
-                    LockNumberCount = true;
-                    // Remove Array elements to prevent duplication
-                    Kanjis = ArrayUtils.remove(Kanjis, RandomNumber);
                 }
-            });
-            KanjiAnswerButtonRight.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    NextButton.setVisibility(View.VISIBLE);
-                    ExampleKanji.setVisibility(View.VISIBLE);
-                    LeftKanjiBack.setVisibility(View.VISIBLE);
-                    MiddleKanjiBack.setVisibility(View.VISIBLE);
-                    RightKanjiBack.setVisibility(View.VISIBLE);
-                    // If this selection is correct added up score.
-                    if(!LockNumberCount) {
-                        if (AnswerPosition == RightPosition){
-                            CorrectAnswers = CorrectAnswers + 1;
-                        }
+                LockNumberCount = true;
+                // Remove Array elements to prevent duplication
+                Kanjis = ArrayUtils.remove(Kanjis, RandomNumber);
+            }
+        });
+        KanjiAnswerButtonMiddle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NextButton.setVisibility(View.VISIBLE);
+                ExampleKanji.setVisibility(View.VISIBLE);
+                LeftKanjiBack.setVisibility(View.VISIBLE);
+                MiddleKanjiBack.setVisibility(View.VISIBLE);
+                RightKanjiBack.setVisibility(View.VISIBLE);
+                // If this selection is correct added up score.
+                if (!LockNumberCount) {
+                    if (AnswerPosition == MiddlePosition) {
+                        CorrectAnswers = CorrectAnswers + 1;
                     }
-                    LockNumberCount = true;
-                    // Remove Array elements to prevent duplication
-                    Kanjis = ArrayUtils.remove(Kanjis, RandomNumber);
                 }
-            });
+                LockNumberCount = true;
+                // Remove Array elements to prevent duplication
+                Kanjis = ArrayUtils.remove(Kanjis, RandomNumber);
+            }
+        });
+        KanjiAnswerButtonRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NextButton.setVisibility(View.VISIBLE);
+                ExampleKanji.setVisibility(View.VISIBLE);
+                LeftKanjiBack.setVisibility(View.VISIBLE);
+                MiddleKanjiBack.setVisibility(View.VISIBLE);
+                RightKanjiBack.setVisibility(View.VISIBLE);
+                // If this selection is correct added up score.
+                if (!LockNumberCount) {
+                    if (AnswerPosition == RightPosition) {
+                        CorrectAnswers = CorrectAnswers + 1;
+                    }
+                }
+                LockNumberCount = true;
+                // Remove Array elements to prevent duplication
+                Kanjis = ArrayUtils.remove(Kanjis, RandomNumber);
+            }
+        });
 
         // On click event. If user clicked next button, then change kanji image.
         NextButton.setOnClickListener(new View.OnClickListener() {
@@ -2179,67 +2238,67 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 // If reach the end
-                if(Kanjis.length > 3){
+                if (Kanjis.length > 3) {
                     // Generate random number
                     Random ran = new Random();
                     RandomNumber = ran.nextInt(Kanjis.length - 0);
-                }else{
+                } else {
                     RandomNumber = 0;
                     Kanjis = Finish;
                 }
                 // To change images. First get resources, then apply it to specified drawable object.
                 Context context = getApplicationContext();
-                int id = context.getResources().getIdentifier(Kanjis[RandomNumber][0] , "drawable", getPackageName());
+                int id = context.getResources().getIdentifier(Kanjis[RandomNumber][0], "drawable", getPackageName());
                 image.setImageResource(id);
 
                 // To change text dynamically, use setText method.
                 String CorrectKanji = Kanjis[RandomNumber][1];
                 String WrongKanji;
                 String WrongKanji2;
-                if(RandomNumber < Kanjis.length - 2 ){
-                    WrongKanji   = Kanjis[RandomNumber + 1][1];
-                    WrongKanji2  = Kanjis[RandomNumber + 2][1];
-                }else if(Kanjis.length < 3){
-                    WrongKanji   = null;
-                    WrongKanji2  = null;
-                }else{
-                    WrongKanji   = Kanjis[RandomNumber - 1][1];
-                    WrongKanji2  = Kanjis[RandomNumber - 2][1];
+                if (RandomNumber < Kanjis.length - 2) {
+                    WrongKanji = Kanjis[RandomNumber + 1][1];
+                    WrongKanji2 = Kanjis[RandomNumber + 2][1];
+                } else if (Kanjis.length < 3) {
+                    WrongKanji = null;
+                    WrongKanji2 = null;
+                } else {
+                    WrongKanji = Kanjis[RandomNumber - 1][1];
+                    WrongKanji2 = Kanjis[RandomNumber - 2][1];
                 }
 
                 Random ran = new Random();
                 int ChoicePosition = ran.nextInt(3 - 0);
-                Drawable LeftImage   = null;
+                Drawable LeftImage = null;
                 Drawable MiddleImage = null;
-                Drawable RightImage  = null;
+                Drawable RightImage = null;
                 Resources res = getResources();
 
-                switch (ChoicePosition){
+                switch (ChoicePosition) {
                     case 0:
                         ReftKanji.setText(CorrectKanji);
                         MiddleKanji.setText(WrongKanji);
                         RightKanji.setText(WrongKanji2);
-                        LeftImage      = ResourcesCompat.getDrawable(res, R.drawable.correct, null);
-                        MiddleImage    = ResourcesCompat.getDrawable(res, R.drawable.wrong, null);
-                        RightImage     = ResourcesCompat.getDrawable(res, R.drawable.wrong, null);
+                        LeftImage = ResourcesCompat.getDrawable(res, R.drawable.correct, null);
+                        MiddleImage = ResourcesCompat.getDrawable(res, R.drawable.wrong, null);
+                        RightImage = ResourcesCompat.getDrawable(res, R.drawable.wrong, null);
                         AnswerPosition = 3;
                         break;
                     case 1:
                         ReftKanji.setText(WrongKanji);
                         MiddleKanji.setText(CorrectKanji);
                         RightKanji.setText(WrongKanji2);
-                        LeftImage   = ResourcesCompat.getDrawable(res, R.drawable.wrong, null);
+                        LeftImage = ResourcesCompat.getDrawable(res, R.drawable.wrong, null);
                         MiddleImage = ResourcesCompat.getDrawable(res, R.drawable.correct, null);
-                        RightImage  = ResourcesCompat.getDrawable(res, R.drawable.wrong, null);
+                        RightImage = ResourcesCompat.getDrawable(res, R.drawable.wrong, null);
                         AnswerPosition = 2;
                         break;
                     case 2:
                         ReftKanji.setText(WrongKanji2);
                         MiddleKanji.setText(WrongKanji);
                         RightKanji.setText(CorrectKanji);
-                        LeftImage   = ResourcesCompat.getDrawable(res, R.drawable.wrong, null);
+                        LeftImage = ResourcesCompat.getDrawable(res, R.drawable.wrong, null);
                         MiddleImage = ResourcesCompat.getDrawable(res, R.drawable.wrong, null);
-                        RightImage  = ResourcesCompat.getDrawable(res, R.drawable.correct, null);
+                        RightImage = ResourcesCompat.getDrawable(res, R.drawable.correct, null);
                         AnswerPosition = 1;
                         break;
                     default:
@@ -2273,4 +2332,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }

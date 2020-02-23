@@ -196,12 +196,35 @@
         android:id="@+id/CorrectAnswers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="47dp"
+        android:layout_marginEnd="72dp"
+        android:layout_marginRight="72dp"
         android:ems="10"
         android:inputType="numberDecimal"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/kanjiWindow"
-        app:layout_constraintEnd_toEndOf="@+id/kanjiWindow"
-        app:layout_constraintStart_toStartOf="@+id/kanjiWindow" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/kanjiWindow"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/level_arrays"
+        android:spinnerMode="dialog"
+        app:layout_constraintBottom_toTopOf="@+id/kanjiWindow"
+        app:layout_constraintStart_toEndOf="@+id/CorrectAnswers"
+        app:layout_constraintTop_toTopOf="@+id/CorrectAnswers" />
+
+    <Button
+        android:id="@+id/SelectLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/selectLevel"
+        app:layout_constraintBottom_toTopOf="@+id/kanjiWindow"
+        app:layout_constraintEnd_toEndOf="@+id/CorrectAnswers"
+        app:layout_constraintTop_toTopOf="@+id/CorrectAnswers" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
