@@ -1,4 +1,6 @@
-package com.example.mainapplication;
+package com.KanjiFlash.mainapplication;
+import java.io.File;
+import java.io.FileReader;
 import java.util.Random;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -20,10 +22,14 @@ import android.content.res.Resources;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
 
 public class MainActivity extends AppCompatActivity {
 
-    //TODO: Add pics
     //FUTURE: Show wrong list in the last.
     //FUTURE: Review example sentence. If sentence is related to picture it helps to remember.
     //FUTURE: Think about monetise.
@@ -33,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
     int Questions = 0;
     int CorrectAnswers = 0;
     int RandomNumber = 0;
+    int RandomNumber2 = 0;
+    int RandomNumber3 = 0;
+    int KanjisLength = 0;
     boolean LockNumberCount = false;
     private Spinner spinner1;
 
@@ -182,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
             {"rush", "奔", "example"},
             {"ladle", "斗", "example"},
             {"fast", "迅", "example"},
-            {"Portrait", "肖", "example"},
+            {"portrait", "肖", "example"},
             {"bowl", "鉢", "example"},
             {"rotten", "朽", "example"},
             {"shell", "殻", "example"},
@@ -429,7 +438,7 @@ public class MainActivity extends AppCompatActivity {
             {"cumulative", "累", "example"}
     };
     String[][] KanjisH9 = {
-            {"void", "虚", "example"},
+            {"void_", "虚", "example"},
             {"soul", "霊", "example"},
             {"regret", "悔", "example"},
             {"decree", "諭", "example"},
@@ -540,7 +549,7 @@ public class MainActivity extends AppCompatActivity {
             {"shop", "舗", "example"},
             {"pregnant", "妊", "example"},
             {"rise", "騰", "example"},
-            {"finally", "遂", "example"},
+            {"finally_", "遂", "example"},
             {"mad", "狂", "example"},
             {"crossroads", "岐", "example"},
             {"latitude", "緯", "example"},
@@ -549,7 +558,7 @@ public class MainActivity extends AppCompatActivity {
             {"boat", "艇", "example"},
             {"bend", "屈", "example"},
             {"pale", "淡", "example"},
-            {"abstract", "抽", "example"},
+            {"abstract_", "抽", "example"},
             {"show", "披", "example"},
             {"court", "廷", "example"},
             {"associate", "准", "example"},
@@ -658,7 +667,7 @@ public class MainActivity extends AppCompatActivity {
             {"purport", "旨", "example"},
             {"immediately", "即", "example"},
             {"willow", "柳", "example"},
-            {"false", "偽", "example"},
+            {"false_", "偽", "example"},
             {"relatively", "較", "example"},
             {"supremacy", "覇", "example"},
             {"symbol", "符", "example"},
@@ -811,7 +820,7 @@ public class MainActivity extends AppCompatActivity {
             {"load", "載", "example"},
             {"dried", "乾", "example"},
             {"front", "陣", "example"},
-            {"for", "為", "example"},
+            {"for_", "為", "example"},
             {"suppress", "抑", "example"},
             {"pray", "祈", "example"},
             {"option", "択", "example"},
@@ -828,7 +837,7 @@ public class MainActivity extends AppCompatActivity {
             {"refuse", "拒", "example"},
             {"punishment", "刑", "example"},
             {"mound", "塚", "example"},
-            {"do", "致", "example"},
+            {"do_", "致", "example"},
             {"repetitive", "繰", "example"},
             {"tail", "尾", "example"},
             {"draw", "描", "example"},
@@ -847,7 +856,7 @@ public class MainActivity extends AppCompatActivity {
             {"bottle", "瓶", "example"},
             {"mansion", "邸", "example"},
             {"bloom", "咲", "example"},
-            {"return", "還", "example"},
+            {"return_", "還", "example"},
             {"summon", "召", "example"},
             {"consider", "慮", "example"},
             {"can", "缶", "example"},
@@ -900,7 +909,7 @@ public class MainActivity extends AppCompatActivity {
             {"inner_part", "奥", "example"},
             {"packed", "詰", "example"},
             {"hang", "掛", "example"},
-            {"double", "双", "example"},
+            {"double_", "双", "example"},
             {"thorn", "刺", "example"},
             {"arrival", "到", "example"},
             {"prison", "監", "example"},
@@ -968,7 +977,7 @@ public class MainActivity extends AppCompatActivity {
             {"search", "捜", "example"},
             {"ultra", "超", "example"},
             {"cure", "療", "example"},
-            {"catch", "捕", "example"},
+            {"catch_", "捕", "example"},
             {"introduction", "介", "example"},
             {"welcome", "迎", "example"},
             {"sales", "販", "example"},
@@ -987,7 +996,7 @@ public class MainActivity extends AppCompatActivity {
             {"general", "普", "example"},
             {"marriage", "婚", "example"},
             {"age", "齢", "example"},
-            {"float", "浮", "example"},
+            {"float_", "浮", "example"},
             {"push", "押", "example"},
             {"defeat", "倒", "example"},
             {"end", "了", "example"},
@@ -1401,7 +1410,7 @@ public class MainActivity extends AppCompatActivity {
             {"construct", "構", "example"},
             {"ratio", "比", "example"},
             {"anti", "防", "example"},
-            {"break", "断", "example"},
+            {"break_", "断", "example"},
             {"territory", "境", "example"},
             {"regulation", "規", "example"}
     };
@@ -1478,7 +1487,7 @@ public class MainActivity extends AppCompatActivity {
             {"relationship", "仲", "example"},
             {"glory", "栄", "example"},
             {"bill", "札", "example"},
-            {"package", "包", "example"},
+            {"package_", "包", "example"},
             {"fold", "折", "example"},
             {"baked", "焼", "example"},
             {"illumination", "照", "example"},
@@ -1516,14 +1525,14 @@ public class MainActivity extends AppCompatActivity {
             {"cool", "冷", "example"},
             {"sort", "類", "example"},
             {"child", "児", "example"},
-            {"Print", "印", "example"},
+            {"print", "印", "example"},
             {"wheel", "輪", "example"},
             {"heat", "熱", "example"},
             {"clear", "清", "example"},
-            {"Mr", "氏", "example"},
+            {"mr", "氏", "example"},
             {"realize", "覚", "example"},
             {"One_hundred_million", "億", "example"},
-            {"Tricks", "芸", "example"},
+            {"tricks", "芸", "example"},
             {"convenience", "便", "example"},
             {"stop", "停", "example"},
             {"land", "陸", "example"},
@@ -1598,7 +1607,7 @@ public class MainActivity extends AppCompatActivity {
             {"corporate", "協", "example"},
             {"mechanism", "機", "example"},
             {"add", "加", "example"},
-            {"continue", "続", "example"},
+            {"continue_", "続", "example"},
             {"improve", "改", "example"},
             {"first_time", "初", "example"},
             {"products", "産", "example"},
@@ -1640,12 +1649,12 @@ public class MainActivity extends AppCompatActivity {
             {"lake", "湖", "example"},
             {"bath", "湯", "example"},
             {"box", "箱", "example"},
-            {"class", "級", "example"},
+            {"class_", "級", "example"},
             {"ice", "氷", "example"},
             {"cold", "寒", "example"},
             {"pick_up", "拾", "example"},
             {"nose", "鼻", "example"},
-            {"dish", "皿", "example"},
+            {"plate", "皿", "example"},
             {"poem", "詩", "example"},
             {"street", "丁", "example"},
             {"bean", "豆", "example"},
@@ -1661,24 +1670,24 @@ public class MainActivity extends AppCompatActivity {
             {"other", "他", "example"},
             {"bridge", "橋", "example"},
             {"beach", "岸", "example"},
-            {"guest", "客", "example"},
+            {"customer", "客", "example"},
             {"ascend", "登", "example"},
             {"quick", "速", "example"},
             {"center", "央", "example"},
-            {"nickname", "号", "example"},
+            {"number", "号", "example"},
             {"root", "根", "example"},
             {"suffering", "苦", "example"},
             {"tool", "具", "example"},
             {"steel", "鉄", "example"},
             {"return", "返", "example"},
-            {"short", "短", "example"},
+            {"short_", "短", "example"},
             {"oil", "油", "example"},
             {"plant", "植", "example"},
             {"inn", "宿", "example"},
             {"medicine", "薬", "example"},
-            {"times", "倍", "example"},
+            {"double_", "倍", "example"},
             {"wave", "波", "example"},
-            {"no", "第", "example"},
+            {"order", "第", "example"},
             {"happy", "幸", "example"},
             {"practice", "練", "example"},
             {"lightly", "軽", "example"},
@@ -1702,7 +1711,7 @@ public class MainActivity extends AppCompatActivity {
     String[][] KanjisG3_3 = {
             {"charge", "係", "example"},
             {"emotion", "感", "example"},
-            {"throw", "投", "example"},
+            {"throw_", "投", "example"},
             {"hit", "打", "example"},
             {"island", "島", "example"},
             {"both", "両", "example"},
@@ -1714,8 +1723,8 @@ public class MainActivity extends AppCompatActivity {
             {"release", "放", "example"},
             {"ball", "球", "example"},
             {"duty", "役", "example"},
-            {"somebody", "身", "example"},
-            {"wherefore", "由", "example"},
+            {"body", "身", "example"},
+            {"reason", "由", "example"},
             {"drink", "飲", "example"},
             {"extinguish", "消", "example"},
             {"god", "神", "example"},
@@ -1737,8 +1746,8 @@ public class MainActivity extends AppCompatActivity {
             {"life", "命", "example"},
             {"blessing", "福", "example"},
             {"sideways", "横", "example"},
-            {"deep", "横", "example"},
-            {"State_politely", "申", "example"},
+            {"side", "横", "example"},
+            {"state_politely", "申", "example"},
             {"kind", "様", "example"}
     };
     String[][] KanjisG3_2 = {
@@ -1804,7 +1813,7 @@ public class MainActivity extends AppCompatActivity {
             {"institution", "院", "example"},
             {"world", "界", "example"},
             {"heavy", "重", "example"},
-            {"correct", "集", "example"},
+            {"gathering", "集", "example"},
             {"object", "物", "example"},
             {"use", "使", "example"},
             {"goods", "品", "example"},
@@ -1813,9 +1822,9 @@ public class MainActivity extends AppCompatActivity {
             {"carry", "運", "example"},
             {"end", "終", "example"},
             {"live", "住", "example"},
-            {"true", "真", "example"},
+            {"true_", "真", "example"},
             {"possess", "有", "example"},
-            {"express", "急", "example"},
+            {"hurry", "急", "example"},
             {"send", "送", "example"},
             {"rotate", "転", "example"},
             {"study", "研", "example"},
@@ -1900,7 +1909,7 @@ public class MainActivity extends AppCompatActivity {
             {"listen", "聞", "example"},
             {"food", "食", "example"},
             {"what", "何", "example"},
-            {"South", "南", "example"},
+            {"south", "南", "example"},
             {"ten_thousand", "万", "example"},
             {"every", "毎", "example"},
             {"mother", "母", "example"},
@@ -1912,7 +1921,7 @@ public class MainActivity extends AppCompatActivity {
             {"company", "社", "example"},
             {"father", "父", "example"},
             {"direction", "方", "example"},
-            {"new", "新", "example"},
+            {"new_", "新", "example"},
             {"place", "場", "example"},
             {"bright", "明", "example"},
             {"capital", "京", "example"},
@@ -1923,7 +1932,7 @@ public class MainActivity extends AppCompatActivity {
             {"make", "作", "example"},
             {"use", "用", "example"},
             {"strong", "強", "example"},
-            {"public", "公", "example"},
+            {"public_", "公", "example"},
             {"field", "野", "example"},
             {"think", "思", "example"},
             {"house", "家", "example"},
@@ -1972,7 +1981,7 @@ public class MainActivity extends AppCompatActivity {
             {"distant", "遠", "example"},
             {"picture", "絵", "example"},
             {"weak", "弱", "example"},
-            {"clear_up", "晴", "example"},
+            {"sunny", "晴", "example"},
             {"snow", "雪", "example"},
             {"fur", "毛", "example"},
             {"yellow", "黄", "example"},
@@ -1980,7 +1989,7 @@ public class MainActivity extends AppCompatActivity {
             {"chirp", "鳴", "example"},
             {"talent", "才", "example"},
             {"barley", "麦", "example"},
-            {"parent's_home", "里", "example"},
+            {"parents_home", "里", "example"},
             {"dart", "矢", "example"},
             {"blade", "刀", "example"},
             {"bow", "弓", "example"},
@@ -1989,7 +1998,7 @@ public class MainActivity extends AppCompatActivity {
             {"minute", "分", "example"},
             {"go", "行", "example"},
             {"time", "時", "example"},
-            {"long", "長", "example"},
+            {"long_", "長", "example"},
             {"country", "国", "example"}
     };
     String[][] KanjisG1_2 = {
@@ -1998,7 +2007,7 @@ public class MainActivity extends AppCompatActivity {
             {"justice", "正", "正義の名の下に/Im Namen der Gerechtigkeit/In the name of justice"},
             {"life", "生", "子供が生まれる/Ein Kind wird geboren/A child is born"},
             {"six", "六", "さいころの六/Sechsseitigen Würfeln möglich/Six of dice"},
-            {"glove", "林", "木々が群生して林になる/Bäume wachsen zu Handschuhen/Trees grow into grove"},
+            {"grove", "林", "木々が群生して林になる/Bäume wachsen zu Handschuhen/Trees grow into grove"},
             {"power", "力", "供給電力/Mit Strom versorgen/Supply power"},
             {"stand", "立", "ヨガのポーズで立つ/Stehen Sie in Yoga-Pose/Stand in yoga pose"},
             {"eye", "目", "青い目/Blaue Augen/Blue eyes"},
@@ -2047,7 +2056,7 @@ public class MainActivity extends AppCompatActivity {
             {"fire", "火", "火炎放射/Unterwäsche/Underwear"},
             {"flower", "花", "花が咲く/Blumen blühen/flowers bloom"},
             {"seashell", "貝", "貝を拾う/Nehmen Sie Schalentiere mit/flowers bloom"},
-            {"study", "子", "栄養について学ぶ/Erfahren Sie über Ernährung/Learn about nutrition"},
+            {"study", "学", "栄養について学ぶ/Erfahren Sie über Ernährung/Learn about nutrition"},
             {"mind", "気", "気の迷い/das Zögern/Hesitation"},
             {"nine", "九", "九十九歳/neunundneunzig Jahre alt/ninety nine years old"},
             {"rest", "休", "休みを取る/machen sie eine pause/Take a break"},
@@ -2057,7 +2066,7 @@ public class MainActivity extends AppCompatActivity {
             {"moon", "月", "夜空に浮かぶ月/Mond, der in den nächtlichen Himmel schwimmt/Moon floating in the night sky"},
             {"dog", "犬", "犬とハンター/Hund und Jäger/dog and hunter"},
             {"see", "見", "望遠鏡で遠くを見る/Schauen Sie mit einem Teleskop weit weg/Look far away with a telescope"},
-            {"five", "六", "五番目のボール/Fünfter Ball/Fifth ball"},
+            {"five", "五", "五番目のボール/Fünfter Ball/Fifth ball"},
             {"mouth", "口", "大きく口を開ける/Mund weit öffnen/Open mouth widely"},
             {"school", "校", "学校に通う/zur Schule gehen/go to school"},
             {"left", "左", "左方向へ向かう/Gehe nach links/Head left"},
@@ -2124,12 +2133,38 @@ public class MainActivity extends AppCompatActivity {
 
         selectLevel.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                Spinner spinner = (Spinner)findViewById(R.id.spinner);
-                String text     = spinner.getSelectedItem().toString();
-                Questions       = 0;
-                CorrectAnswers  = 0;
 
-                switch(text)
+                Spinner spinner   = (Spinner)findViewById(R.id.spinner);
+                String KanjiLevel = spinner.getSelectedItem().toString();
+
+                String baseDir    = getFilesDir().getAbsolutePath();
+                String fileName   = KanjiLevel + ".csv";
+                String filePath   = baseDir + File.separator + fileName;
+
+                Questions         = 0;
+                CorrectAnswers    = 0;
+                NextButton.setVisibility(View.VISIBLE);
+                ExampleKanji.setVisibility(View.INVISIBLE);
+                LeftKanjiBack.setVisibility(View.INVISIBLE);
+                MiddleKanjiBack.setVisibility(View.INVISIBLE);
+                RightKanjiBack.setVisibility(View.INVISIBLE);
+                ReftKanji.setText("");
+                MiddleKanji.setText("");
+                RightKanji.setText("");
+
+                Context context = getApplicationContext();
+                int id = context.getResources().getIdentifier("start", "drawable", getPackageName());
+                image.setImageResource(id);
+
+                // future: read data from CSV files.
+                // try (CSVReader csvReader = new CSVReader(new FileReader(filePath))){
+                //     String[] values = null;
+                //     while ((values = csvReader.readNext()) != null){
+                //         Kanjis
+                //     }
+                // }
+
+                switch(KanjiLevel)
             {
                 case "G1_1": Kanjis = KanjisG1_1; break;
                 case "G1_2": Kanjis = KanjisG1_2; break;
@@ -2171,6 +2206,29 @@ public class MainActivity extends AppCompatActivity {
                 case "H15":  Kanjis = KanjisH15;   break;
                 default: break;
                 }
+
+                CorrectAnswersText.setText(String.valueOf(Questions).concat("/").concat(String.valueOf(Kanjis.length)));
+
+                KanjisLength = Kanjis.length;
+
+                // Export csv files
+                // try {
+
+                //     String baseDir = getFilesDir().getAbsolutePath();
+                //     String fileName = KanjiLevel + ".csv";
+                //     String filePath = baseDir + File.separator + fileName;
+
+                //     // CSV export
+                //     CSVWriter writer = new CSVWriter(new FileWriter(filePath), ',');
+                //     // feed in your array (or convert your data to an array)
+                //     for (String[] strTemp : Kanjis) {
+                //         writer.writeNext(strTemp);
+                //     }
+                //     writer.close();
+                // }
+                // catch (IOException e){
+                //     e.printStackTrace();
+                // }
             }
         });
 
@@ -2186,11 +2244,11 @@ public class MainActivity extends AppCompatActivity {
                 if (!LockNumberCount) {
                     if (AnswerPosition == LeftPosition) {
                         CorrectAnswers = CorrectAnswers + 1;
+                        // Remove Array elements to prevent duplication
+                        Kanjis = ArrayUtils.remove(Kanjis, RandomNumber);
                     }
                 }
                 LockNumberCount = true;
-                // Remove Array elements to prevent duplication
-                Kanjis = ArrayUtils.remove(Kanjis, RandomNumber);
             }
         });
         KanjiAnswerButtonMiddle.setOnClickListener(new View.OnClickListener() {
@@ -2205,11 +2263,11 @@ public class MainActivity extends AppCompatActivity {
                 if (!LockNumberCount) {
                     if (AnswerPosition == MiddlePosition) {
                         CorrectAnswers = CorrectAnswers + 1;
+                        // Remove Array elements to prevent duplication
+                        Kanjis = ArrayUtils.remove(Kanjis, RandomNumber);
                     }
                 }
                 LockNumberCount = true;
-                // Remove Array elements to prevent duplication
-                Kanjis = ArrayUtils.remove(Kanjis, RandomNumber);
             }
         });
         KanjiAnswerButtonRight.setOnClickListener(new View.OnClickListener() {
@@ -2224,11 +2282,11 @@ public class MainActivity extends AppCompatActivity {
                 if (!LockNumberCount) {
                     if (AnswerPosition == RightPosition) {
                         CorrectAnswers = CorrectAnswers + 1;
+                        // Remove Array elements to prevent duplication
+                        Kanjis = ArrayUtils.remove(Kanjis, RandomNumber);
                     }
                 }
                 LockNumberCount = true;
-                // Remove Array elements to prevent duplication
-                Kanjis = ArrayUtils.remove(Kanjis, RandomNumber);
             }
         });
 
@@ -2237,34 +2295,37 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                String CorrectKanji;
+                String WrongKanji;
+                String WrongKanji2;
+
                 // If reach the end
                 if (Kanjis.length > 3) {
                     // Generate random number
                     Random ran = new Random();
-                    RandomNumber = ran.nextInt(Kanjis.length - 0);
+                    RandomNumber  = ran.nextInt(Kanjis.length - 0);
+                    RandomNumber2 = ran.nextInt(Kanjis.length - 0);
+                    RandomNumber3 = ran.nextInt(Kanjis.length - 0);
+
+                    while (RandomNumber == RandomNumber2 || RandomNumber == RandomNumber3){
+                        RandomNumber2 = ran.nextInt(Kanjis.length - 0);
+                        RandomNumber3 = ran.nextInt(Kanjis.length - 0);
+                    }
+                    WrongKanji   = Kanjis[RandomNumber2][1];
+                    WrongKanji2  = Kanjis[RandomNumber3][1];
                 } else {
                     RandomNumber = 0;
                     Kanjis = Finish;
+                    WrongKanji   = "";
+                    WrongKanji2  = "";
                 }
+
+                CorrectKanji = Kanjis[RandomNumber][1];
+
                 // To change images. First get resources, then apply it to specified drawable object.
                 Context context = getApplicationContext();
                 int id = context.getResources().getIdentifier(Kanjis[RandomNumber][0], "drawable", getPackageName());
                 image.setImageResource(id);
-
-                // To change text dynamically, use setText method.
-                String CorrectKanji = Kanjis[RandomNumber][1];
-                String WrongKanji;
-                String WrongKanji2;
-                if (RandomNumber < Kanjis.length - 2) {
-                    WrongKanji = Kanjis[RandomNumber + 1][1];
-                    WrongKanji2 = Kanjis[RandomNumber + 2][1];
-                } else if (Kanjis.length < 3) {
-                    WrongKanji = null;
-                    WrongKanji2 = null;
-                } else {
-                    WrongKanji = Kanjis[RandomNumber - 1][1];
-                    WrongKanji2 = Kanjis[RandomNumber - 2][1];
-                }
 
                 Random ran = new Random();
                 int ChoicePosition = ran.nextInt(3 - 0);
@@ -2304,7 +2365,7 @@ public class MainActivity extends AppCompatActivity {
                     default:
                         break;
                 }
-                ExampleKanji.setText(Kanjis[RandomNumber][2]);
+                ExampleKanji.setText(Kanjis[RandomNumber][0]);
 
                 // Set image to show Wrong or Not
                 LeftKanjiBack.setImageDrawable(LeftImage);
@@ -2321,8 +2382,14 @@ public class MainActivity extends AppCompatActivity {
                 // Set texts
                 //CorrectAnswersText.setText(String.valueOf(CorrectAnswers).concat(" CorrectAnswers"));
                 //QuestionsText.setText(String.valueOf(CorrectAnswers).concat(" CorrectAnswers/").concat(String.valueOf(Questions).concat(" Questions")));
-                CorrectAnswersText.setText(String.valueOf(CorrectAnswers).concat("/").concat(String.valueOf(Questions)));
 
+                if (KanjisLength < Kanjis.length) {
+                    KanjisLength = Kanjis.length;
+                }
+                CorrectAnswersText.setText(String.valueOf(Kanjis.length - 3).concat("/").concat(String.valueOf(KanjisLength - 3)));
+                if (Kanjis == Finish) {
+                    CorrectAnswersText.setText("");
+                }
                 // Count up number of questions
                 Questions = Questions + 1;
 

@@ -18,6 +18,20 @@
         <item>G3_2</item>
         <item>G3_3</item>
         <item>G3_4</item>
+        <item>G3_5</item>
+    </string-array>
+
+    <string-array name="level_arrays_paid">
+        <item>G1_1</item>
+        <item>G1_2</item>
+        <item>G2_1</item>
+        <item>G2_2</item>
+        <item>G2_3</item>
+        <item>G3_1</item>
+        <item>G3_2</item>
+        <item>G3_3</item>
+        <item>G3_4</item>
+        <item>G3_5</item>
         <item>G4_1</item>
         <item>G4_2</item>
         <item>G4_3</item>
